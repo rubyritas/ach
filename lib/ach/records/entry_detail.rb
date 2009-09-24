@@ -1,14 +1,4 @@
 module ACH
-  CHECKING_CREDIT = '22'
-  CHECKING_DEBIT = '27'
-  CHECKING_CREDIT_PRENOTE = '23'
-  CHECKING_DEBIT_PRENOT = '28'
-
-  SAVING_CREDIT = '32'
-  SAVING_DEBIT = '37'
-  SAVING_CREDIT_PRENOTE = '33'
-  SAVING_DEBIT_PRENOT = '38'
-  
   class EntryDetail < Record
     @fields = []
     

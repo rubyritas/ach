@@ -1,11 +1,3 @@
-# Require records files
-require File.dirname(__FILE__) + '/records/field_identifiers.rb'
-require File.dirname(__FILE__) + '/records/record.rb'
-
-Dir[File.dirname(__FILE__) + '/records/*.rb'].each do |file|
-  require file
-end
-
 module ACH 
   class ACHFile
     include FieldIdentifiers

@@ -1,5 +1,3 @@
-require 'time'
-
 module ACH
   class BatchHeader < Record
     @fields = []
