@@ -1,4 +1,4 @@
-module ACH
+module ACH::Records
   class FileHeader < Record
     @fields = []
     

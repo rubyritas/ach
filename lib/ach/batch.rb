@@ -6,8 +6,8 @@ module ACH
     
     def initialize
       @entries = []
-      @header = BatchHeader.new
-      @control = BatchControl.new
+      @header = Records::BatchHeader.new
+      @control = Records::BatchControl.new
     end
     
     def to_ach

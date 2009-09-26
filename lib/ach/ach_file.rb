@@ -8,8 +8,8 @@ module ACH
     
     def initialize
       @batches = []
-      @header = FileHeader.new
-      @control = FileControl.new
+      @header = Records::FileHeader.new
+      @control = Records::FileControl.new
     end
     
     def to_s
@@ -20,7 +20,7 @@ module ACH
       
       nines_needed = 10 - (records.length % 10)
       nines_needed = nines_needed % 10
-      nines_needed.times { records << Nines.new() }
+      nines_needed.times { records << Records::Nines.new() }
       
       @control.batch_count = @batches.length
       @control.block_count = (records.length / 10).ceil

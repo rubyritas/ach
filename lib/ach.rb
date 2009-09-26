@@ -22,3 +22,8 @@ require 'ach/records/record'
 Dir.new(File.dirname(__FILE__) + '/ach/records').each do |file|
   require('ach/records/' + File.basename(file)) if File.extname(file) == ".rb"
 end
+
+# Include Records module to simplify accessing Records classes.
+module ACH
+  include Records
+end
