@@ -6,12 +6,16 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "ach"
     gem.summary = %{Helper for building ACH files in Ruby}
+    gem.description = <<EOF
+ach is a Ruby helper for builder ACH files. In particular, it helps with field
+order and alignment, and adds padding lines to end of file.
+EOF
     gem.email = "jmorgan@morgancreative.net"
     gem.homepage = "http://github.com/jm81/ach"
     gem.authors = ["Jared Morgan"]
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
-
+  Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
 end
