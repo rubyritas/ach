@@ -30,18 +30,19 @@ on individual fields. You can probably obtain a copy from your bank.
     batch = ACH::Batch.new
     bh = batch.header
     bh.company_name = "Company Name"
-    bh.company_identification = "Company ID"
+    bh.company_identification = "123456789"
     bh.company_entry_description = "DESCRIPTION"
     bh.company_descriptive_date = Date.today
     bh.effective_entry_date = (Date.today + 1)
     bh.originating_dfi_identification = "00000000"
+    ach.batches << batch
     
     # Detail Entry
     ed = ACH::EntryDetail.new
     ed.transaction_code = ACH::CHECKING_CREDIT
     ed.routing_number = "000000000"
     ed.account_number = "00000000000"
-    ed.amount = "100" # In cents
+    ed.amount = 100 # In cents
     ed.individual_id_number = "Employee Name"
     ed.individual_name = "Employee Name"
     ed.originating_dfi_identification = '00000000'
@@ -51,8 +52,9 @@ on individual fields. You can probably obtain a copy from your bank.
     # Insert trace numbers
     batch.entries.each{ |entry| entry.trace_number = (trace_number += 1) }
     
+    
     output = ach.to_s
-    File.open("/path/to/ach.txt", 'w') do |f|
+    File.open("ach.txt", 'w') do |f|
       f.write output
     end
 

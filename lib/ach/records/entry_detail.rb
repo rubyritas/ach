@@ -27,6 +27,11 @@ module ACH::Records
     def debit?
       !credit?
     end
+    
+    def amount_value
+      return self.amount
+    end
+    
   end
 end
 

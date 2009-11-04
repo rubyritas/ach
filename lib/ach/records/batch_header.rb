@@ -12,6 +12,7 @@ module ACH::Records
     field :company_identification, String,
         lambda {|f| '1' + f}, nil, /\A\d{9}\Z/,
         'Company Tax ID'
+    #TODO Change this to CCD, allow being set as a default/preference?
     const_field :standard_entry_class_code, 'PPD'
     field :company_entry_description, String,
         lambda { |f| left_justify(f, 10)}
