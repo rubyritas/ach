@@ -23,4 +23,15 @@ describe ACH::Records::BatchHeader do
     
     it 'should be limited to real codes'
   end
+  
+  describe '#service_class_code' do
+    it 'should accept an Integer'
+    it 'should accept a String'
+    it 'must be a 200, 220, 225 or 280'
+   
+    describe '#service_class_code_to_ach' do
+      it 'should use a given value'
+      it 'should default to determining from entries'
+    end
+  end
 end
