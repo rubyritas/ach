@@ -31,6 +31,7 @@ on individual fields. You can probably obtain a copy from your bank.
     bh = batch.header
     bh.company_name = "Company Name"
     bh.company_identification = "123456789"
+    bh.standard_entry_class_code = 'PPD'
     bh.company_entry_description = "DESCRIPTION"
     bh.company_descriptive_date = Date.today
     bh.effective_entry_date = (Date.today + 1)

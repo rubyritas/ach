@@ -12,8 +12,11 @@ module ACH::Records
     field :company_identification, String,
         lambda {|f| '1' + f}, nil, /\A\d{9}\Z/,
         'Company Tax ID'
-    #TODO Allow being set as a default/preference?
-    const_field :standard_entry_class_code, 'CCD'
+    # TODO This should be used to determine whether other records are valid for
+    # for this code. Should there be a Class for each code?
+    # The default of PPD is purely for my benefit (Jared Morgan)
+    field :standard_entry_class_code, String, 
+        lambda { |f| f.upcase }, 'PPD', /\A\w{3}\Z/
     field :company_entry_description, String,
         lambda { |f| left_justify(f, 10)}
     field :company_descriptive_date, Time,
