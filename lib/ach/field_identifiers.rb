@@ -14,7 +14,12 @@ module ACH
           unless val =~ validate
             raise RuntimeError, "#{val} does not match Regexp #{validate}"
           end
+        elsif validate.respond_to?(:call) # Proc with value as argument
+          unless validate.call(val)
+            raise RuntimeError, "#{val} does not pass validation Proc"
+          end
         end
+        
         instance_variable_set( "@#{name}", val )
       end
       
