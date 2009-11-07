@@ -4,9 +4,10 @@ module ACH::Records
     
     const_field :record_type, '8'
     
-    # TODO: This needs to be changed to reflect whether credits, debits or both.
-    const_field :service_class_code, '200'
     # Many of the fields are calculated in Batch.to_ach
+    field :service_class_code, String,
+        lambda { |f| f.to_s }, '200', 
+        lambda { |f| ACH::SERVICE_CLASS_CODES.include?(f.to_i) }
     field :entry_count, Integer, lambda { |f| sprintf('%06d', f)}
     field :entry_hash, Integer, lambda { |f| sprintf('%010d', f % (10 ** 10))}
     field :debit_total, Integer, lambda { |f| sprintf('%012d', f)}
