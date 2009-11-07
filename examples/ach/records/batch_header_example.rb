@@ -1,9 +1,12 @@
 require 'example_helper'
+require 'ach/records/shared/batch_summaries'
 
 describe ACH::Records::BatchHeader do
   before(:each) do
     @record = ACH::Records::BatchHeader.new
   end
+  
+  self.instance_eval(&SharedExamples.batch_summaries)
   
   describe '#standard_entry_class_code' do
     it 'should default to PPD' do
