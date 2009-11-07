@@ -9,6 +9,14 @@ module ACH
   SAVING_DEBIT = '37'
   SAVING_CREDIT_PRENOTE = '33'
   SAVING_DEBIT_PRENOT = '38'
+  
+  # Valid service class codes
+  SERVICE_CLASS_CODES = [
+    200, # ACH Entries Mixed Debits and Credits
+    220, # ACH Credits Only
+    225, # ACH Debits Only
+    280  # ACH Automated Accounting Advices
+  ]
 end
 
 require 'time'

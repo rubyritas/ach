@@ -1,19 +1,13 @@
 module ACH::Records
   class BatchHeader < Record
     @fields = []
-    SERVICE_CLASS_CODES = [
-      200, # ACH Entries Mixed Debits and Credits
-      220, # ACH Credits Only
-      225, # ACH Debits Only
-      280  # ACH Automated Accounting Advices
-    ]
     
     const_field :record_type, '5'
     
     # TODO: This needs to be changed to reflect whether credits, debits or both.
     field :service_class_code, String,
         lambda { |f| f.to_s }, '200', 
-        lambda { |f| SERVICE_CLASS_CODES.include?(f.to_i) }
+        lambda { |f| ACH::SERVICE_CLASS_CODES.include?(f.to_i) }
     field :company_name, String, lambda { |f| left_justify(f, 16)}
     field :company_discretionary_data, String,
         lambda { |f| left_justify(f, 20)}, ''
