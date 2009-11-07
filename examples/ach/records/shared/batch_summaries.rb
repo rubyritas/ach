@@ -36,8 +36,6 @@ module SharedExamples
           it 'should default to 200 when entries unavailable' do
             @record.service_class_code_to_ach.should == '200'
           end
-          
-          it 'should default to determining from entries available'
         end
       end
     end
