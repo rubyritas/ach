@@ -37,7 +37,7 @@ module ACH
         @control.entry_hash += batch.control.entry_hash
       end
       
-      records.collect { |r| r.to_ach }.join("\n") + "\n"
+      records.collect { |r| r.to_ach }.join("\r\n") + "\r\n"
     end
     
     def report
@@ -50,7 +50,7 @@ module ACH
               sprintf("% 7d.%02d", entry.amount / 100, entry.amount % 100)
         end
       end
-      lines.join("\n")
+      lines.join("\r\n")
     end
   end
 end
