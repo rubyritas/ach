@@ -48,8 +48,14 @@ module ACH
         batch.entries.each do | entry |
           lines << left_justify(entry.individual_name + ": ", 25) +
               sprintf("% 7d.%02d", entry.amount / 100, entry.amount % 100)
-        end
+        end        
       end
+      lines << ""
+      lines << left_justify("Debit Total: ", 25) +
+          sprintf("% 7d.%02d", @control.debit_total / 100, @control.debit_total % 100)
+      lines << left_justify("Credit Total: ", 25) +
+          sprintf("% 7d.%02d", @control.credit_total / 100, @control.credit_total % 100)
+      
       lines.join("\r\n")
     end
   end
