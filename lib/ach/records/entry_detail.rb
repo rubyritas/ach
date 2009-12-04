@@ -1,5 +1,7 @@
 module ACH::Records
   class EntryDetail < Record
+    CREDIT_RECORD_TRANSACTION_CODE_ENDING_DIGITS = ["0", "1", "2", "3", "4"]
+    
     @fields = []
     
     attr_accessor :sorter
@@ -21,7 +23,7 @@ module ACH::Records
     field :trace_number, Integer, lambda { |f| sprintf('%07d', f)}
     
     def credit?
-      @transaction_code[1..1] == '2' || @transaction_code[1..1] == '3'
+      CREDIT_RECORD_TRANSACTION_CODE_ENDING_DIGITS.include?(@transaction_code[1..1])
     end
     
     def debit?
