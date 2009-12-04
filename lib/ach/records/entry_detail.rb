@@ -36,5 +36,3 @@ module ACH::Records
     
   end
 end
-
-# Uses '\r\n' (I think)

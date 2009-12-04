@@ -5,15 +5,20 @@ module ACH::Records
     const_field :record_type, '5'
     
     # TODO: This needs to be changed to reflect whether credits, debits or both.
-    const_field :service_class_code, '200'
+    field :service_class_code, String,
+        lambda { |f| f.to_s }, '200', 
+        lambda { |f| ACH::SERVICE_CLASS_CODES.include?(f.to_i) }
     field :company_name, String, lambda { |f| left_justify(f, 16)}
     field :company_discretionary_data, String,
         lambda { |f| left_justify(f, 20)}, ''
     field :company_identification, String,
         lambda {|f| '1' + f}, nil, /\A\d{9}\Z/,
         'Company Tax ID'
-    #TODO Allow being set as a default/preference?
-    const_field :standard_entry_class_code, 'CCD'
+    # TODO This should be used to determine whether other records are valid for
+    # for this code. Should there be a Class for each code?
+    # The default of PPD is purely for my benefit (Jared Morgan)
+    field :standard_entry_class_code, String, 
+        lambda { |f| f.upcase }, 'PPD', /\A\w{3}\Z/
     field :company_entry_description, String,
         lambda { |f| left_justify(f, 10)}
     field :company_descriptive_date, Time,
