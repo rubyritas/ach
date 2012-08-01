@@ -9,6 +9,9 @@ module ACH
   SAVING_DEBIT = '37'
   SAVING_CREDIT_PRENOTE = '33'
   SAVING_DEBIT_PRENOTE = '38'
+
+  LOAN_CREDIT = '52'
+  LOAN_CREDIT_PRENOTE = '53'
   
   # Valid service class codes
   SERVICE_CLASS_CODES = [
