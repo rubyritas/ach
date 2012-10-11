@@ -5,7 +5,7 @@ module ACH::Records
     const_field :record_type, '1'
     const_field :priority_code, '01'
     routing_field :immediate_destination
-    routing_field :immediate_origin
+    field :immediate_origin, String, nil, /\A\d{9,10}\Z/
     field :transmission_datetime, Time,
         lambda { |f| f.strftime('%y%m%d%H%M')},
         lambda { Time.now }
