@@ -33,7 +33,7 @@ module ACH
           elsif default
             val = default
           else
-            raise RuntimeError, "val is nil"
+            raise RuntimeError, "val of #{name} is nil"
           end
         end
         
