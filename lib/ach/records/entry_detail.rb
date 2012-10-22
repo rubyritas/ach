@@ -35,4 +35,43 @@ module ACH::Records
     end
     
   end
+
+  class CtxEntryDetail < EntryDetail
+
+    @fields = EntryDetail.fields.slice(0, 6)
+    field :number_of_addenda_records, Integer, lambda { |f| sprintf('%04d', f)}, 0
+    field :individual_name, String, lambda { |f| left_justify(f, 16)}
+    const_field :reserved, '  '
+    field :discretionary_data, String, lambda { |f| left_justify(f, 2)}, '  '
+    field :addenda_record_indicator, Integer,
+        lambda { |f| sprintf('%01d', f)}
+    field :originating_dfi_identification, String,
+        lambda {|f| f}, nil, /\A\d{8}\Z/
+    field :trace_number, Integer, lambda { |f| sprintf('%07d', f)}
+
+
+    attr_reader :addenda
+
+    def initialize
+      @addenda = []
+    end
+
+    def addenda_records?
+      return !self.addenda.empty?
+    end
+
+    def to_ach
+      self.addenda_record_indicator = (self.addenda.empty? ? 0 : 1)
+      self.number_of_addenda_records = self.addenda.length
+
+      ach_string = super
+
+      self.addenda.each {|a|
+        a.entry_detail_sequence_number = self.trace_number
+        ach_string << a.to_ach
+      }
+      return ach_string
+    end  
+
+  end
 end
