@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'micronaut'
 require 'ach'
+require 'date'
 
 def not_in_editor?
   !(ENV.has_key?('TM_MODE') || ENV.has_key?('EMACS') || ENV.has_key?('VIM'))
