@@ -20,13 +20,6 @@ rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
 end
 
-require 'rake/testtask'
-  Rake::TestTask.new do |t|
-    t.libs << "test"
-    t.test_files = FileList['test/*test*.rb']
-    t.verbose = true
-  end
-
 require 'micronaut/rake_task'
 Micronaut::RakeTask.new(:examples) do |examples|
   examples.pattern = 'examples/**/*_example.rb'
