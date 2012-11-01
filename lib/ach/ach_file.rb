@@ -95,7 +95,7 @@ module ACH
           bh.effective_entry_date           = Date.parse(line[69..74])
           bh.originating_dfi_identification = line[79..86].strip
         elsif type == '6'
-          ed = ACH::EntryDetail.new
+          ed = ACH::CtxEntryDetail.new
           ed.transaction_code               = line[1..2]
           ed.routing_number                 = line[3..11]
           ed.account_number                 = line[12..28].strip
@@ -106,12 +106,12 @@ module ACH
           ed.trace_number                   = line[87..93].to_i
           batch.entries << ed
         elsif type == '7'
-          ad = ACH::Addenda.new
-          ad.addenda_type_code              = line[1..2]
-          ad.payment_related_information    = line[3..82].strip
+          ad = ACH::Addendum.new
+          ad.type_code                      = line[1..2]
+          ad.payment_data                   = line[3..82].strip
           ad.sequence_number                = line[83..86].strip
           ad.entry_detail_sequence_number   = line[87..93].to_i
-          batch.addendas << ad
+          ed.addenda << ad
         elsif type == '8'
           # skip
         elsif type == '9'
