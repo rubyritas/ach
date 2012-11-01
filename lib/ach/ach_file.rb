@@ -1,3 +1,5 @@
+require 'date'
+
 module ACH 
   class ACHFile
     include FieldIdentifiers
@@ -6,10 +8,14 @@ module ACH
     attr_reader :header
     attr_reader :control
     
-    def initialize
+    def initialize data=nil
       @batches = []
       @header = Records::FileHeader.new
       @control = Records::FileControl.new
+
+      if data
+        parse(data)
+      end
     end
     
     def to_s
@@ -37,6 +43,7 @@ module ACH
         @control.entry_hash += batch.control.entry_hash
       end
       
+
       records.collect { |r| r.to_ach }.join("\r\n") + "\r\n"
     end
     
@@ -57,6 +64,67 @@ module ACH
           sprintf("% 7d.%02d", @control.credit_total / 100, @control.credit_total % 100)
       
       lines.join("\r\n")
+    end
+
+    def parse data
+      trace_number = 0
+      fh =  self.header
+      batch = nil
+      bh = nil
+      ed = nil
+
+      data.split(/\n|\r\n/).each do |line|
+        type = line[0..0]
+        if type == '1'
+          fh.immediate_destination          = line[03..12].strip
+          fh.immediate_origin               = line[13..22].strip
+          fh.transmission_datetime          = Time.utc('20'+line[23..24], line[25..26], line[27..28], line[29..30], line[31..32])
+          fh.file_id_modifier               = line[33..33]
+          fh.immediate_destination_name     = line[40..62].strip
+          fh.immediate_origin_name          = line[63..85].strip
+          fh.reference_code                 = line[86..93].strip
+        elsif type == '5'
+          self.batches << batch unless batch.nil?
+          batch = ACH::Batch.new
+          bh = batch.header
+          bh.company_name                   = line[4..19].strip
+          bh.company_identification         = line[41..49].strip
+          bh.standard_entry_class_code      = line[50..52].strip
+          bh.company_entry_description      = line[53..62].strip
+          bh.company_descriptive_date       = Date.parse(line[63..68])
+          bh.effective_entry_date           = Date.parse(line[69..74])
+          bh.originating_dfi_identification = line[79..86].strip
+        elsif type == '6'
+          ed = ACH::EntryDetail.new
+          ed.transaction_code               = line[1..2]
+          ed.routing_number                 = line[3..11]
+          ed.account_number                 = line[12..28].strip
+          ed.amount                         = line[29..38].to_i # cents
+          ed.individual_id_number           = line[39..53].strip
+          ed.individual_name                = line[54..75].strip
+          ed.originating_dfi_identification = line[79..86]
+          ed.trace_number                   = line[87..93].to_i
+          batch.entries << ed
+        elsif type == '7'
+          ad = ACH::Addenda.new
+          ad.addenda_type_code              = line[1..2]
+          ad.payment_related_information    = line[3..82].strip
+          ad.sequence_number                = line[83..86].strip
+          ad.entry_detail_sequence_number   = line[87..93].to_i
+          batch.addendas << ad
+        elsif type == '8'
+          # skip
+        elsif type == '9'
+          # skip
+        else
+          raise "Didn't recognize type code #{type} for this line:\n#{line}"
+        end
+      end
+
+      batch.entries << ed unless ed.nil?
+      self.batches << batch unless batch.nil?
+      batch.entries.each{ |entry| entry.trace_number = (trace_number += 1) }
+      to_s
     end
   end
 end

@@ -10,8 +10,7 @@ describe ACH::FieldIdentifiers do
     it 'should validate against a Regexp' do
       @klass.field(:sample, String, nil, nil, /\A\w{5}\Z/)
       record = @klass.new
-      msg = "abcd does not match Regexp #{/\A\w{5}\Z/}"
-      lambda { record.sample = 'abcd' }.should raise_error(RuntimeError, msg)
+      lambda { record.sample = 'abcd' }.should raise_error(RuntimeError)
       record.sample.should be_nil
       lambda { record.sample = 'abcdef' }.should raise_error(RuntimeError)
       record.sample.should be_nil
@@ -26,8 +25,7 @@ describe ACH::FieldIdentifiers do
       
       @klass.field(:sample, String, nil, nil, block)
       record = @klass.new
-      msg = "5 does not pass validation Proc"
-      lambda { record.sample = 5 }.should raise_error(RuntimeError, msg)
+      lambda { record.sample = 5 }.should raise_error(RuntimeError)
       record.sample.should be_nil
       lambda { record.sample = 501 }.should raise_error(RuntimeError)
       record.sample.should be_nil

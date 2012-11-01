@@ -22,7 +22,7 @@ end
 
 require 'micronaut/rake_task'
 Micronaut::RakeTask.new(:examples) do |examples|
-  examples.pattern = 'examples/**/*_example.rb'
+  examples.pattern = './examples/**/*_example.rb'
   examples.ruby_opts << '-Ilib -Iexamples'
 end
 
@@ -34,7 +34,7 @@ end
 
 task :default => :examples
 
-require 'rake/rdoctask'
+require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ''
   rdoc.rdoc_dir = 'rdoc'
