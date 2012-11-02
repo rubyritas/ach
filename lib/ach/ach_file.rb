@@ -73,7 +73,7 @@ module ACH
       bh = nil
       ed = nil
 
-      data.split(/\n|\r\n/).each do |line|
+      data.strip.split(/\n|\r\n/).each do |line|
         type = line[0..0]
         if type == '1'
           fh.immediate_destination          = line[03..12].strip
