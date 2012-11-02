@@ -4,14 +4,16 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = "ach"
-  s.version = "0.3.1"
+  s.name = %q{ach}
+  s.version = "0.3.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jared Morgan", "Josh Puetz"]
-  s.date = "2012-10-23"
-  s.description = "ach is a Ruby helper for builder ACH files. In particular, it helps with field\norder and alignment, and adds padding lines to end of file.\n"
-  s.email = "jmorgan@morgancreative.net"
+  s.date = %q{2012-11-01}
+  s.description = %q{ach is a Ruby helper for builder ACH files. In particular, it helps with field
+order and alignment, and adds padding lines to end of file.
+}
+  s.email = %q{jmorgan@morgancreative.net}
   s.extra_rdoc_files = [
     "README.md"
   ]
@@ -45,10 +47,10 @@ Gem::Specification.new do |s|
     "lib/ach/records/nines.rb",
     "lib/ach/records/record.rb"
   ]
-  s.homepage = "http://github.com/jm81/ach"
+  s.homepage = %q{http://github.com/jm81/ach}
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
-  s.summary = "Helper for building ACH files in Ruby"
+  s.rubygems_version = %q{1.6.2}
+  s.summary = %q{Helper for building ACH files in Ruby}
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
