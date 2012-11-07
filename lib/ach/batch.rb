@@ -1,11 +1,13 @@
 module ACH
   class Batch
     attr_reader :entries
+    attr_reader :addendas
     attr_reader :header
     attr_reader :control
     
     def initialize
       @entries = []
+      @addendas = []
       @header = Records::BatchHeader.new
       @control = Records::BatchControl.new
     end
@@ -49,7 +51,7 @@ module ACH
       @control.originating_dfi_identification = @header.originating_dfi_identification
       @control.batch_number = @header.batch_number
       
-      [@header] + @entries + [@control]
+      [@header] + @entries + @addendas + [@control]
     end
   end
 end

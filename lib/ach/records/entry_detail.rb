@@ -68,7 +68,7 @@ module ACH::Records
 
       self.addenda.each {|a|
         a.entry_detail_sequence_number = self.trace_number
-        ach_string << "\r\n" + a.to_ach 
+        ach_string << "\r\n" + a.to_ach
       }
       return ach_string
     end  

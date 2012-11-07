@@ -12,11 +12,11 @@ module ACH
       define_method "#{name}=" do | val |
         if validate.kind_of?(Regexp)
           unless val =~ validate
-            raise RuntimeError, "#{val} does not match Regexp #{validate}"
+            raise RuntimeError, "#{val} does not match Regexp #{validate} for field #{name}"
           end
         elsif validate.respond_to?(:call) # Proc with value as argument
           unless validate.call(val)
-            raise RuntimeError, "#{val} does not pass validation Proc"
+            raise RuntimeError, "#{val} does not pass validation Proc for field #{name}"
           end
         end
         
@@ -33,7 +33,7 @@ module ACH
           elsif default
             val = default
           else
-            raise RuntimeError, "val is nil"
+            raise RuntimeError, "val of #{name} is nil"
           end
         end
         
