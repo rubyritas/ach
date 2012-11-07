@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "ach"
-  s.version = "0.4.0"
+  s.version = "0.3.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jared Morgan", "Josh Puetz"]
-  s.date = "2012-10-23"
+  s.date = "2012-11-07"
   s.description = "ach is a Ruby helper for builder ACH files. In particular, it helps with field\norder and alignment, and adds padding lines to end of file.\n"
   s.email = "jmorgan@morgancreative.net"
   s.extra_rdoc_files = [
@@ -25,6 +25,8 @@ Gem::Specification.new do |s|
     "examples/ach/ach_file_example.rb",
     "examples/ach/batch_example.rb",
     "examples/ach/field_identifiers_example.rb",
+    "examples/ach/fixtures/return_noc.txt",
+    "examples/ach/parse_example.rb",
     "examples/ach/records/batch_control_example.rb",
     "examples/ach/records/batch_header_example.rb",
     "examples/ach/records/ctx_entry_detail_example.rb",
