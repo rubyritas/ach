@@ -91,9 +91,7 @@ module ACH
           bh.company_identification         = line[41..49].strip
           bh.standard_entry_class_code      = line[50..52].strip
           bh.company_entry_description      = line[53..62].strip
-          if line[63..68].strip.length > 0
-            bh.company_descriptive_date     = Date.parse(line[63..68])
-          end
+          bh.company_descriptive_date       = Date.parse(line[63..68]) rescue nil # this can be various formats
           bh.effective_entry_date           = Date.parse(line[69..74])
           bh.originating_dfi_identification = line[79..86].strip
         elsif type == '6'
