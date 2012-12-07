@@ -37,6 +37,12 @@ describe "Parse" do
       ed.individual_id_number.should == "A38LTNY2"
       ed.individual_name.should == "NAME ONE"
 
+      ed.addenda.size.should == 1
+      ad = ed.addenda[0]
+      ad.type_code.should == '98'
+      ad.payment_data.should =~ /^C05/
+      ad.sequence_number.should == 4039
+
       batch = ach.batches[1]
       batch.entries.size.should == 1
       bh = batch.header
