@@ -40,7 +40,9 @@ describe "Parse" do
       ed.addenda.size.should == 1
       ad = ed.addenda[0]
       ad.type_code.should == '98'
-      ad.payment_data.should =~ /^C05/
+      ad.reason_code.should == 'C05'
+      ad.original_entry_trace_number.should == '992222220280489'
+      ad.corrected_data.should == '32'
       ad.sequence_number.should == 4039
 
       batch = ach.batches[1]
@@ -49,6 +51,13 @@ describe "Parse" do
       bh.standard_entry_class_code.should == 'PPD'
       ed = batch.entries[0]
       ed.amount.should == 2536
+
+      ed.addenda.size.should == 1
+      ad = ed.addenda[0]
+      ad.type_code.should == '99'
+      ad.reason_code.should == 'R07'
+      ad.original_entry_trace_number.should == '992222220280393'
+      ad.addenda_information.should == 'INVALID'
     end
 
   end

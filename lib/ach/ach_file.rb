@@ -107,8 +107,16 @@ module ACH
           ed.trace_number                   = line[87..93].to_i
           batch.entries << ed
         when '7'
-          ad = ACH::Addendum.new
-          ad.type_code                      = line[1..2]
+          type_code = line[1..2]
+          ad = case type_code
+          when '98'
+            ACH::Addendum::NotificationOfChange.new
+          when '99'
+            ACH::Addendum::Return.new
+          else
+            ACH::Addendum.new
+          end
+          ad.type_code                      = type_code
           ad.payment_data                   = line[3..82].strip
           ad.sequence_number                = line[83..86].strip.to_i
           ad.entry_detail_sequence_number   = line[87..93].to_i
