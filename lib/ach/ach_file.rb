@@ -74,8 +74,9 @@ module ACH
       ed = nil
 
       data.strip.split(/\n|\r\n/).each do |line|
-        type = line[0..0]
-        if type == '1'
+        type = line[0]
+        case type
+        when '1'
           fh.immediate_destination          = line[03..12].strip
           fh.immediate_origin               = line[13..22].strip
           fh.transmission_datetime          = Time.utc('20'+line[23..24], line[25..26], line[27..28], line[29..30], line[31..32])
@@ -83,7 +84,7 @@ module ACH
           fh.immediate_destination_name     = line[40..62].strip
           fh.immediate_origin_name          = line[63..85].strip
           fh.reference_code                 = line[86..93].strip
-        elsif type == '5'
+        when '5'
           self.batches << batch unless batch.nil?
           batch = ACH::Batch.new
           bh = batch.header
@@ -94,7 +95,7 @@ module ACH
           bh.company_descriptive_date       = Date.parse(line[63..68]) rescue nil # this can be various formats
           bh.effective_entry_date           = Date.parse(line[69..74])
           bh.originating_dfi_identification = line[79..86].strip
-        elsif type == '6'
+        when '6'
           ed = ACH::CtxEntryDetail.new
           ed.transaction_code               = line[1..2]
           ed.routing_number                 = line[3..11]
@@ -105,16 +106,24 @@ module ACH
           ed.originating_dfi_identification = line[79..86]
           ed.trace_number                   = line[87..93].to_i
           batch.entries << ed
-        elsif type == '7'
-          ad = ACH::Addendum.new
-          ad.type_code                      = line[1..2]
+        when '7'
+          type_code = line[1..2]
+          ad = case type_code
+          when '98'
+            ACH::Addendum::NotificationOfChange.new
+          when '99'
+            ACH::Addendum::Return.new
+          else
+            ACH::Addendum.new
+          end
+          ad.type_code                      = type_code
           ad.payment_data                   = line[3..82].strip
           ad.sequence_number                = line[83..86].strip.to_i
           ad.entry_detail_sequence_number   = line[87..93].to_i
           ed.addenda << ad
-        elsif type == '8'
+        when '8'
           # skip
-        elsif type == '9'
+        when '9'
           # skip
         else
           raise "Didn't recognize type code #{type} for this line:\n#{line}"
