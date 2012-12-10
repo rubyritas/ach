@@ -4,7 +4,7 @@ ach is a Ruby helper for builder ACH files. In particular, it helps with field
 order and alignment, and adds padding lines to end of file.
 
 **This library has only been used in one production application and for very
-limited purposes. Please test thoroughly before using in a production 
+limited purposes. Please test thoroughly before using in a production
 environment.**
 
 See [ACH::Builder](http://search.cpan.org/~tkeefer/ACH-Builder-0.03/lib/ACH/Builder.pm)
@@ -31,7 +31,7 @@ fh.immediate_origin_name = "BANK NAME"
 batch = ACH::Batch.new
 bh = batch.header
 bh.company_name = "Company Name"
-bh.company_identification = "123456789"
+bh.company_identification = "1234567890"
 bh.standard_entry_class_code = 'PPD'
 bh.company_entry_description = "DESCRIPTION"
 bh.company_descriptive_date = Date.today

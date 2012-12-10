@@ -8,7 +8,7 @@ class CtxEntryDetailTest < Test::Unit::TestCase
     @entry = ACH::CtxEntryDetail.new
     @entry.transaction_code = ACH::CHECKING_DEBIT
     @entry.routing_number = '023456789'
-    @entry.account_number = '123456789'
+    @entry.account_number = '1234567890'
     @entry.amount = 10000
     @entry.individual_name = "Bob Roberts"
     @entry.originating_dfi_identification = '02345678'
