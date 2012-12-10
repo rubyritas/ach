@@ -22,7 +22,7 @@ describe "Parse" do
       batch.entries.size.should == 1
       bh = batch.header
       bh.company_name.should == "COMPANY INC"
-      bh.company_identification.should == "1412345678"
+      bh.company_identification.should == "412345678"
       bh.standard_entry_class_code.should == 'COR'
       bh.company_entry_description.should == "DESCRIPT"
       bh.company_descriptive_date.should == Date.parse('121015')
