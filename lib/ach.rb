@@ -4,7 +4,7 @@ module ACH
   CHECKING_DEBIT = '27'
   CHECKING_CREDIT_PRENOTE = '23'
   CHECKING_DEBIT_PRENOTE = '28'
-  
+
   SAVING_CREDIT = '32'
   SAVING_DEBIT = '37'
   SAVING_CREDIT_PRENOTE = '33'
@@ -12,7 +12,7 @@ module ACH
 
   LOAN_CREDIT = '52'
   LOAN_CREDIT_PRENOTE = '53'
-  
+
   # Valid service class codes
   SERVICE_CLASS_CODES = [
     200, # ACH Entries Mixed Debits and Credits
@@ -36,6 +36,6 @@ end
 
 # Include Records module to simplify accessing Records classes.
 module ACH
-  VERSION = '0.4.0'
+  VERSION = '0.4.1'
   include Records
 end
