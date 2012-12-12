@@ -4,7 +4,8 @@ module ACH::Records
 
     const_field :record_type, '8'
 
-    # Many of the fields are calculated in Batch.to_ach
+    # TODO: many of the fields are calculated in Batch.to_ach, so the defaults
+    #       should be removed
     field :service_class_code, String,
         lambda { |f| f.to_s }, '200',
         lambda { |f| ACH::SERVICE_CLASS_CODES.include?(f.to_i) }
@@ -15,8 +16,7 @@ module ACH::Records
     field :company_identification_code_designator, String, lambda {|f| f}, '1',
         /\A[13]\z/
     field :company_identification, String,
-        lambda {|f| f}, nil, /\A\d{9}\z/,
-        'Company Tax ID'
+        lambda {|f| f}, nil, /\A\d{9}\z/
 
     field :message_authentication_code, String,
         lambda { |f| left_justify(f, 19)}, ''

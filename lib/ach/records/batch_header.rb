@@ -4,7 +4,7 @@ module ACH::Records
 
     const_field :record_type, '5'
 
-    # TODO: This needs to be changed to reflect whether credits, debits or both.
+    # TODO: this is calculated in Batch.to_ach, so the default should be removed
     field :service_class_code, String,
         lambda { |f| f.to_s }, '200',
         lambda { |f| ACH::SERVICE_CLASS_CODES.include?(f.to_i) }
@@ -14,10 +14,9 @@ module ACH::Records
     field :company_identification_code_designator, String, lambda {|f| f}, '1',
         /\A[13]\z/
     field :company_identification, String,
-        lambda {|f| f}, nil, /\A\d{9}\z/,
-        'Company Tax ID'
+        lambda {|f| f}, nil, /\A\d{9}\z/
     # TODO This should be used to determine whether other records are valid for
-    # for this code. Should there be a Class for each code?
+    # this code. Should there be a Class for each code?
     # The default of PPD is purely for my benefit (Jared Morgan)
     field :standard_entry_class_code, String,
         lambda { |f| f.upcase }, 'PPD', /\A\w{3}\z/

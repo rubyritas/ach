@@ -1,5 +1,6 @@
 module ACH
   module FieldIdentifiers
+    # NOTE: the msg parameter is unused and should be removed when the API can change
     def field(name, klass, stringify = nil, default = nil, validate = nil, msg ='')
       fields << name
 
@@ -61,8 +62,7 @@ module ACH
 
     # A routing number without leading space
     def spaceless_routing_field(sym)
-      field sym, String, lambda {|f| f}, nil, /\A\d{9}\z/,
-        'A string consisting of exactly nine digits'
+      field sym, String, lambda {|f| f}, nil, /\A\d{9}\z/
     end
   end
 end
