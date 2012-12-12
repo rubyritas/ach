@@ -62,7 +62,7 @@ module ACH
 
     # A routing number without leading space
     def spaceless_routing_field(sym)
-      field sym, String, lambda {|f| f}, nil, /\A\d{9}\z/
+      field sym, String, nil, nil, /\A\d{9}\z/
     end
   end
 end
