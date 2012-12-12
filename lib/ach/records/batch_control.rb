@@ -14,7 +14,7 @@ module ACH::Records
     field :debit_total, Integer, lambda { |f| sprintf('%012d', f)}
     field :credit_total, Integer, lambda { |f| sprintf('%012d', f)}
     field :company_identification_code_designator, String, lambda {|f| f}, '1',
-        /\A[13]\z/
+        /\A[0-9 ]\z/
     field :company_identification, String,
         lambda {|f| f}, nil, /\A\d{9}\z/
 

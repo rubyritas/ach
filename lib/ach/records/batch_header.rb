@@ -12,7 +12,7 @@ module ACH::Records
     field :company_discretionary_data, String,
         lambda { |f| left_justify(f, 20)}, ''
     field :company_identification_code_designator, String, lambda {|f| f}, '1',
-        /\A[13]\z/
+        /\A[0-9 ]\z/
     field :company_identification, String,
         lambda {|f| f}, nil, /\A\d{9}\z/
     # TODO This should be used to determine whether other records are valid for
