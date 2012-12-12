@@ -86,6 +86,28 @@ describe ACH::Batch do
       debits.header.service_class_code.should == 225
     end
 
+    it 'should set BatchControl#company_identification_code_designator from BatchHeader' do
+      batch = new_batch
+      batch.header.company_identification_code_designator = "3"
+      batch.control.company_identification_code_designator.should be_nil # default values are only set when calling to_ach
+      batch.to_ach
+      batch.control.company_identification_code_designator.should == "3"
+    end
+
+    it 'should set BatchControl#company_identification from BatchHeader' do
+      batch = new_batch
+      batch.control.company_identification.should be_nil
+      batch.to_ach
+      batch.control.company_identification.should == "123456789"
+    end
+
+    it 'should set BatchControl#originating_dfi_identification from BatchHeader' do
+      batch = new_batch
+      batch.control.originating_dfi_identification.should be_nil
+      batch.to_ach
+      batch.control.originating_dfi_identification.should == "00000000"
+    end
+
     it 'should not override BatchHeader#service_class_code if already set' do
       # Granted that I can't imagine this every being used...
       batch = new_batch
