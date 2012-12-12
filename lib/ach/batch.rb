@@ -47,6 +47,11 @@ module ACH
         @control.service_class_code = @header.service_class_code 
       end
       
+      if ! @header.company_identification_code_designator.nil?
+        @control.company_identification_code_designator =
+          @header.company_identification_code_designator
+      end
+
       @control.company_identification = @header.company_identification
       @control.originating_dfi_identification = @header.originating_dfi_identification
       @control.batch_number = @header.batch_number

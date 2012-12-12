@@ -12,7 +12,7 @@ module ACH::Records
     field :company_discretionary_data, String,
         lambda { |f| left_justify(f, 20)}, ''
     field :company_identification_code_designator, String, lambda {|f| f}, '1',
-        /\A(1|3){1}\z/
+        /\A[13]\z/
     field :company_identification, String,
         lambda {|f| f}, nil, /\A\d{9}\z/,
         'Company Tax ID'
