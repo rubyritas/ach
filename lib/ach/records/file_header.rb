@@ -4,12 +4,12 @@ module ACH::Records
     
     const_field :record_type, '1'
     const_field :priority_code, '01'
-    field :immediate_destination, String, nil, /\A\s?\d{9}\Z/
-    field :immediate_origin, String, nil, /\A\d{9,10}\Z/
+    field :immediate_destination, String, nil, /\A\s?\d{9}\z/
+    field :immediate_origin, String, nil, /\A\d{9,10}\z/
     field :transmission_datetime, Time,
         lambda { |f| f.strftime('%y%m%d%H%M')},
         lambda { Time.now }
-    field :file_id_modifier, String, nil, 'A', /\A\w\Z/
+    field :file_id_modifier, String, nil, 'A', /\A\w\z/
     const_field :record_size, '094'
     const_field :blocking_factor, '10'
     const_field :format_code, '1'

@@ -66,13 +66,13 @@ module ACH
     # A routing number, usually, a string consisting of exactly nine digits.
     # Represented by 'bTTTTAAAAC'.
     def routing_field(sym)
-      field sym, String, lambda {|f| ' ' + f}, nil, /\A\d{9}\Z/,
+      field sym, String, lambda {|f| ' ' + f}, nil, /\A\d{9}\z/,
         'A string consisting of exactly nine digits'
     end
 
     # A routing number without leading space
     def spaceless_routing_field(sym)
-      field sym, String, lambda {|f| f}, nil, /\A\d{9}\Z/,
+      field sym, String, lambda {|f| f}, nil, /\A\d{9}\z/,
         'A string consisting of exactly nine digits'
     end
   end
