@@ -3,7 +3,7 @@ module ACH::Records
     @fields = []
 
     const_field :record_type, '7'
-    field :type_code, String, nil, '05', /\A\d{2}\Z/
+    field :type_code, String, nil, '05', /\A\d{2}\z/
     field :payment_data, String, lambda { |f| left_justify(f, 80)}
     field :sequence_number, Integer, lambda { |f| sprintf('%04d', f)}
     field :entry_detail_sequence_number, Integer, lambda { |f| sprintf('%07d', f)}
