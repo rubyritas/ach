@@ -13,9 +13,9 @@ module ACH::Records
     field :debit_total, Integer, lambda { |f| sprintf('%012d', f)}
     field :credit_total, Integer, lambda { |f| sprintf('%012d', f)}
     field :company_identification_code_designator, String, lambda {|f| f}, '1',
-        /\A(1|3){1}\Z/
+        /\A[13]\z/
     field :company_identification, String,
-        lambda {|f| f}, nil, /\A\d{9}\Z/,
+        lambda {|f| f}, nil, /\A\d{9}\z/,
         'Company Tax ID'
 
     field :message_authentication_code, String,
@@ -24,7 +24,7 @@ module ACH::Records
     const_field :reserved, (' ' * 6)
 
     field :originating_dfi_identification, String,
-        lambda {|f| f}, nil, /\A\d{8}\Z/
+        lambda {|f| f}, nil, /\A\d{8}\z/
 
     field :batch_number, Integer, lambda { |f| sprintf('%07d', f)}, 1
   end
