@@ -4,20 +4,19 @@ module ACH::Records
 
     const_field :record_type, '5'
 
-    # TODO: This needs to be changed to reflect whether credits, debits or both.
+    # TODO: this is calculated in Batch.to_ach, so the default should be removed
     field :service_class_code, String,
         lambda { |f| f.to_s }, '200',
         lambda { |f| ACH::SERVICE_CLASS_CODES.include?(f.to_i) }
     field :company_name, String, lambda { |f| left_justify(f, 16)}
     field :company_discretionary_data, String,
         lambda { |f| left_justify(f, 20)}, ''
-    field :company_identification_code_designator, String, lambda {|f| f}, '1',
-        /\A[13]\z/
+    field :company_identification_code_designator, String, nil, '1',
+        /\A[0-9 ]\z/
     field :company_identification, String,
-        lambda {|f| f}, nil, /\A\d{9}\z/,
-        'Company Tax ID'
+        nil, nil, /\A\d{9}\z/
     # TODO This should be used to determine whether other records are valid for
-    # for this code. Should there be a Class for each code?
+    # this code. Should there be a Class for each code?
     # The default of PPD is purely for my benefit (Jared Morgan)
     field :standard_entry_class_code, String,
         lambda { |f| f.upcase }, 'PPD', /\A\w{3}\z/
@@ -31,7 +30,7 @@ module ACH::Records
     const_field :settlement_date, '   '
     const_field :originator_status_code, '1'
     field :originating_dfi_identification, String,
-        lambda {|f| f}, nil, /\A\d{8}\z/
+        nil, nil, /\A\d{8}\z/
 
     field :batch_number, Integer, lambda { |f| sprintf('%07d', f)}, 1
   end
