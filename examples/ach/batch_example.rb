@@ -2,8 +2,6 @@ require 'example_helper'
 
 describe ACH::Batch do
   before(:each) do
-    @batch = ACH::Batch.new
-
     @credit = ACH::EntryDetail.new
     @credit.transaction_code = ACH::CHECKING_CREDIT
     @credit.routing_number = "000000000"
@@ -30,7 +28,7 @@ describe ACH::Batch do
     return batch
   end
 
-  describe '#to_s' do
+  describe '#to_ach' do
     it 'should determine BatchHeader#service_class_code if not set' do
       debits = new_batch
       debits.entries << @debit << @debit

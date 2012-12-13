@@ -8,7 +8,7 @@ module ACH::Records
     
     const_field :record_type, '6'
     field :transaction_code, String,
-        lambda {|f| f}, nil, /\A\d{2}\z/
+        nil, nil, /\A\d{2}\z/
     spaceless_routing_field :routing_number # Receiving DFI Identification 
                                             # and Check Digit
     field :account_number, String, lambda { |f| left_justify(f, 17)}
@@ -19,7 +19,7 @@ module ACH::Records
     field :addenda_record_indicator, Integer,
         lambda { |f| sprintf('%01d', f)}, 0
     field :originating_dfi_identification, String,
-        lambda {|f| f}, nil, /\A\d{8}\z/
+        nil, nil, /\A\d{8}\z/
     field :trace_number, Integer, lambda { |f| sprintf('%07d', f)}
     
     def credit?
@@ -46,7 +46,7 @@ module ACH::Records
     field :addenda_record_indicator, Integer,
         lambda { |f| sprintf('%01d', f)}
     field :originating_dfi_identification, String,
-        lambda {|f| f}, nil, /\A\d{8}\z/
+        nil, nil, /\A\d{8}\z/
     field :trace_number, Integer, lambda { |f| sprintf('%07d', f)}
 
 
