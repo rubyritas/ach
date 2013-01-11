@@ -57,7 +57,7 @@ module ACH
 
     # NOTE: Deprecated; this can be removed when the API is allowed to change
     def left_justify(val, length)
-      val.ljust(length)
+      val[0..(length - 1)].ljust(length)
     end
 
     # A routing number without leading space

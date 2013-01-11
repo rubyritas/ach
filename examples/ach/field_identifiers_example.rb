@@ -2,6 +2,7 @@ require 'example_helper'
 
 describe ACH::FieldIdentifiers do
   describe 'setter' do
+
     before(:each) do
       @klass = Class.new(ACH::Records::Record)
       @klass.instance_variable_set(:@fields, [])
@@ -41,5 +42,6 @@ describe ACH::FieldIdentifiers do
       record.sample = 'abcde'
       record.instance_variable_get(:@sample).should == 'abcde'
     end
+
   end
 end

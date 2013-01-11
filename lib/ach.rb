@@ -36,6 +36,6 @@ end
 
 # Include Records module to simplify accessing Records classes.
 module ACH
-  VERSION = '0.4.1'
+  VERSION = '0.4.2'
   include Records
 end
