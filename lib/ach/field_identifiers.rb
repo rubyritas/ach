@@ -55,7 +55,7 @@ module ACH
       end
     end
 
-    # NOTE: Deprecated; this can be removed when the API is allowed to change
+    # Left justify value and truncate to length if needed
     def left_justify(val, length)
       val[0..(length - 1)].ljust(length)
     end
