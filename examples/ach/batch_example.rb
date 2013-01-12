@@ -114,5 +114,10 @@ describe ACH::Batch do
       batch.to_ach
       batch.control.service_class_code.should == 200
     end
+
+    it 'should truncate fields that exceed the length in left_justify' do
+      @credit.individual_name = "Employee Name That Is Much Too Long"
+      @credit.individual_name_to_ach.should == "Employee Name That Is "
+    end
   end
 end
