@@ -1,24 +1,5 @@
-require 'rubygems'
-require 'rake'
-
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.name = "ach"
-    gem.summary = %{Helper for building ACH files in Ruby}
-    gem.description = <<EOF
-ach is a Ruby helper for builder ACH files. In particular, it helps with field
-order and alignment, and adds padding lines to end of file.
-EOF
-    gem.email = "jmorgan@morgancreative.net"
-    gem.homepage = "http://github.com/jm81/ach"
-    gem.authors = ["Jared Morgan", "Josh Puetz"]
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
-  end
-  Jeweler::GemcutterTasks.new
-rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
-end
+$:.push File.expand_path('../lib', __FILE__)
+require 'ach/version'
 
 require 'micronaut/rake_task'
 Micronaut::RakeTask.new(:examples) do |examples|
@@ -36,12 +17,16 @@ task :default => :examples
 
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ''
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "ACH #{version}"
+  rdoc.title = "ACH #{ACH::VERSION}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
+task :build do
+  system 'gem build ach.gemspec'
+end
 
-
+task :release => :build do
+  system "gem push ach-#{ACH::VERSION}.gem"
+end
