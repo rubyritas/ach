@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'example_helper'
 
 describe ACH::Batch do
@@ -118,6 +119,11 @@ describe ACH::Batch do
     it 'should truncate fields that exceed the length in left_justify' do
       @credit.individual_name = "Employee Name That Is Much Too Long"
       @credit.individual_name_to_ach.should == "Employee Name That Is "
+    end
+
+    it 'should strip non ascii characters' do
+      @credit.individual_name = "Jacob Møller"
+      @credit.individual_name_to_ach.should == "Jacob Mller          "
     end
   end
 end
