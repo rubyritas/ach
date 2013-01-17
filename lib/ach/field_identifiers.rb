@@ -1,5 +1,14 @@
 module ACH
   module FieldIdentifiers
+
+    # these are used to convert non ascii characters to UTF-8
+
+    ENCODING_OPTIONS = {
+      :invalid           => :replace,  # Replace invalid byte sequences
+      :undef             => :replace,  # Replace anything not defined in ASCII
+      :replace           => '',        # Use a blank for those replacements
+    }
+
     # NOTE: the msg parameter is unused and should be removed when the API can change
     def field(name, klass, stringify = nil, default = nil, validate = nil, msg ='')
       fields << name
@@ -38,11 +47,11 @@ module ACH
           end
         end
 
-        if stringify.nil?
-          return val
-        else
-          stringify.call(val)
+        if !stringify.nil?
+          val = stringify.call(val)
         end
+
+        val.encode Encoding.find('ASCII'), ENCODING_OPTIONS
       end
     end
 
