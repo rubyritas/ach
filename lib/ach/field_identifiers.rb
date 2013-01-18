@@ -47,11 +47,19 @@ module ACH
           end
         end
 
-        if !stringify.nil?
-          val = stringify.call(val)
+        if val.kind_of?(String)
+          if RUBY_VERSION < '1.9'
+            val = Iconv.conv('ASCII//IGNORE', 'UTF8', val)
+          else
+            val = val.encode Encoding.find('ASCII'), ENCODING_OPTIONS
+          end
         end
 
-        val.encode Encoding.find('ASCII'), ENCODING_OPTIONS
+        if stringify
+          stringify.call(val)
+        else
+          val
+        end
       end
     end
 

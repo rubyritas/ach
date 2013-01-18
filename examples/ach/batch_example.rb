@@ -123,7 +123,7 @@ describe ACH::Batch do
 
     it 'should strip non ascii characters' do
       @credit.individual_name = "Jacob Møller"
-      @credit.individual_name_to_ach.should == "Jacob Mller          "
+      @credit.individual_name_to_ach.should == "Jacob Mller           "
     end
   end
 end
