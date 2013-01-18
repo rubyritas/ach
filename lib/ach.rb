@@ -26,6 +26,7 @@ require 'time'
 require 'ach/field_identifiers'
 require 'ach/ach_file'
 require 'ach/batch'
+require 'ach/version'
 
 # Require records files
 require 'ach/records/record'
@@ -36,6 +37,5 @@ end
 
 # Include Records module to simplify accessing Records classes.
 module ACH
-  VERSION = '0.4.3'
   include Records
 end
