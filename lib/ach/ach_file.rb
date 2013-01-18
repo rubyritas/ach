@@ -74,7 +74,7 @@ module ACH
       ed = nil
 
       data.strip.split(/\n|\r\n/).each do |line|
-        type = line[0]
+        type = line[0].chr
         case type
         when '1'
           fh.immediate_destination          = line[03..12].strip
