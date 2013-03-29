@@ -7,6 +7,18 @@ describe "Parse" do
       @data = File.read('examples/ach/fixtures/return_noc.txt')
     end
 
+    it 'should produce the same number of entries as the original ACH file' do
+      ACH::ACHFile.new(@data).batches.reduce([]) do |entries, batch|
+        batch.entries.each { |e| entries << e }
+        entries
+      end.size.should == 3
+
+      ACH::ACHFile.new(ACH::ACHFile.new(@data).to_s).batches.reduce([]) do |entries, batch|
+        batch.entries.each { |e| entries << e }
+        entries
+      end.size.should == 3
+    end
+
     it "should parse return/notification of change file" do
       ach = ACH::ACHFile.new(@data)
       fh = ach.header
