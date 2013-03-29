@@ -8,15 +8,9 @@ describe "Parse" do
     end
 
     it 'should produce the same number of entries as the original ACH file' do
-      ACH::ACHFile.new(@data).batches.reduce([]) do |entries, batch|
-        batch.entries.each { |e| entries << e }
-        entries
-      end.size.should == 3
+      entries = ACH::ACHFile.new(@data).batches.reduce([]) { |entries, batch| entries << batch.entries }
 
-      ACH::ACHFile.new(ACH::ACHFile.new(@data).to_s).batches.reduce([]) do |entries, batch|
-        batch.entries.each { |e| entries << e }
-        entries
-      end.size.should == 3
+      entries.flatten.size.should == 3
     end
 
     it "should parse return/notification of change file" do
