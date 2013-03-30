@@ -130,7 +130,6 @@ module ACH
         end
       end
 
-      batch.entries << ed unless ed.nil?
       self.batches << batch unless batch.nil?
       batch.entries.each{ |entry| entry.trace_number = (trace_number += 1) }
       to_s
