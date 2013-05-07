@@ -8,13 +8,13 @@ module ACH
     attr_reader :header
     attr_reader :control
 
-    def initialize data=nil
+    def initialize(data = nil, opts = {})
       @batches = []
       @header = Records::FileHeader.new
       @control = Records::FileControl.new
 
       if data
-        parse(data)
+        parse(data, opts)
       end
     end
 
@@ -66,12 +66,21 @@ module ACH
       lines.join("\r\n")
     end
 
-    def parse data
+    def parse(data, opts = {})
       trace_number = 0
       fh =  self.header
       batch = nil
       bh = nil
       ed = nil
+      entry_detail_type =
+        case opts[:entry_detail]
+        when :PPD
+          ACH::EntryDetail
+        when :CTX
+          ACH::CtxEntryDetail
+        else
+          ACH::CtxEntryDetail
+        end
 
       data.strip.split(/\n|\r\n/).each do |line|
         type = line[0].chr
@@ -97,7 +106,7 @@ module ACH
           bh.effective_entry_date                   = Date.parse(line[69..74])
           bh.originating_dfi_identification         = line[79..86].strip
         when '6'
-          ed = ACH::CtxEntryDetail.new
+          ed = entry_detail_type.new
           ed.transaction_code               = line[1..2]
           ed.routing_number                 = line[3..11]
           ed.account_number                 = line[12..28].strip
