@@ -72,15 +72,14 @@ module ACH
       batch = nil
       bh = nil
       ed = nil
-      entry_detail_type =
-        case opts[:entry_detail]
-        when :PPD
-          ACH::EntryDetail
-        when :CTX
-          ACH::CtxEntryDetail
-        else
-          ACH::CtxEntryDetail
-        end
+
+      # Allow the constructor to define the type of entry detail items the parser should
+      # expect.
+      entry_detail_type = case String(opts[:entry_detail_type])
+                          when /PPD/i then ACH::EntryDetail
+                          when /CTX/i then ACH::CtxEntryDetail
+                          else ACH::CtxEntryDetail
+                          end
 
       data.strip.split(/\n|\r\n/).each do |line|
         type = line[0].chr
