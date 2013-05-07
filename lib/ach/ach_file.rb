@@ -88,13 +88,14 @@ module ACH
           self.batches << batch unless batch.nil?
           batch = ACH::Batch.new
           bh = batch.header
-          bh.company_name                   = line[4..19].strip
-          bh.company_identification         = line[41..49].strip
-          bh.standard_entry_class_code      = line[50..52].strip
-          bh.company_entry_description      = line[53..62].strip
-          bh.company_descriptive_date       = Date.parse(line[63..68]) rescue nil # this can be various formats
-          bh.effective_entry_date           = Date.parse(line[69..74])
-          bh.originating_dfi_identification = line[79..86].strip
+          bh.company_name                           = line[4..19].strip
+          bh.company_identification_code_designator = line[39..40].strip
+          bh.company_identification                 = line[41..49].strip
+          bh.standard_entry_class_code              = line[50..52].strip
+          bh.company_entry_description              = line[53..62].strip
+          bh.company_descriptive_date               = Date.parse(line[63..68]) rescue nil # this can be various formats
+          bh.effective_entry_date                   = Date.parse(line[69..74])
+          bh.originating_dfi_identification         = line[79..86].strip
         when '6'
           ed = ACH::CtxEntryDetail.new
           ed.transaction_code               = line[1..2]
