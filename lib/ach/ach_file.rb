@@ -57,8 +57,8 @@ module ACH
           line << sprintf("% 7d.%02d", entry.amount / 100, entry.amount % 100)
           entry.addenda.each do |addendum|
             line << [
-              addendum.reason_code.ljust(5),
-              addendum.reason_description.ljust(30),
+              addendum.reason_code,
+              addendum.reason_description.ljust(40),
               (addendum.corrected_data if addendum.respond_to?(:corrected_data)).to_s.ljust(30),
             ] * ' '
           end
