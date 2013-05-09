@@ -51,10 +51,19 @@ module ACH
       to_s # To ensure correct records
       lines = []
 
-      @batches.each do | batch |
-        batch.entries.each do | entry |
-          lines << left_justify(entry.individual_name + ": ", 25) +
-              sprintf("% 7d.%02d", entry.amount / 100, entry.amount % 100)
+      @batches.each do |batch|
+        batch.entries.each do |entry|
+          line = [left_justify(entry.individual_name + ": ", 25)]
+          line << sprintf("% 7d.%02d", entry.amount / 100, entry.amount % 100)
+          entry.addenda.each do |addendum|
+            line << [
+              addendum.reason_code.ljust(5),
+              addendum.reason_description.ljust(30),
+              (addendum.corrected_data if addendum.respond_to?(:corrected_data)).to_s.ljust(30),
+            ] * ' '
+          end
+
+          lines << line * ' '
         end
       end
       lines << ""
@@ -75,7 +84,7 @@ module ACH
 
       # Allow the constructor to define the type of entry detail items the parser should
       # expect.
-      entry_detail_type = case String(opts[:entry_detail_type])
+      entry_detail_type = case String(opts[:entry_detail_type]).upcase
                           when /PPD/i then ACH::EntryDetail
                           when /CTX/i then ACH::CtxEntryDetail
                           else ACH::CtxEntryDetail
