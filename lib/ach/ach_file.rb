@@ -53,7 +53,8 @@ module ACH
 
       @batches.each do |batch|
         batch.entries.each do |entry|
-          line = [left_justify(entry.individual_name + ": ", 25)]
+          line = [entry.individual_id_number]
+          line << left_justify(entry.individual_name + ": ", 25)]
           line << sprintf("% 7d.%02d", entry.amount / 100, entry.amount % 100)
           entry.addenda.each do |addendum|
             line << [
