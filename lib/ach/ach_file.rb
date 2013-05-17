@@ -71,19 +71,19 @@ module ACH
     end
 
     def batch_report(batch, format = nil)
-      if opts[:format].to_sym == :long
-        "#{batch.header.effective_entry_date}".ljust(30)
+      if format.to_s == 'long'
+        "\r\nBATCH: #{batch.header.effective_entry_date}\r\n"
       else
         nil
       end
     end
 
     def entry_report(entry, format = nil)
-      line = [entry.individual_id_number]
+      line = [ entry.individual_id_number.ljust(15) ]
       line << left_justify(entry.individual_name + ": ", 25)
       line << sprintf("% 7d.%02d", entry.amount / 100, entry.amount % 100)
 
-      if opts[:format].to_sym == :long
+      if format.to_s == 'long'
         entry.addenda.each do |addendum|
           line << [
             addendum.reason_code,
@@ -93,7 +93,7 @@ module ACH
         end
       end
 
-      line
+      line.join(' ')
     end
 
     def parse(data, opts = {})
