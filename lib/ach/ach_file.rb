@@ -79,7 +79,12 @@ module ACH
     end
 
     def entry_report(entry, format = nil)
-      line = [ entry.individual_id_number.ljust(15) ]
+      line = []
+
+      if format.to_s == 'long'
+        line << [ entry.individual_id_number.ljust(15) ]
+      end
+
       line << left_justify(entry.individual_name + ": ", 25)
       line << sprintf("% 7d.%02d", entry.amount / 100, entry.amount % 100)
 
