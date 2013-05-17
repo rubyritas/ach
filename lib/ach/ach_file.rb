@@ -47,33 +47,53 @@ module ACH
       records.collect { |r| r.to_ach }.join("\r\n") + "\r\n"
     end
 
-    def report
+    def report(opts = {})
       to_s # To ensure correct records
       lines = []
 
       @batches.each do |batch|
-        batch.entries.each do |entry|
-          line = [entry.individual_id_number]
-          line << left_justify(entry.individual_name + ": ", 25)
-          line << sprintf("% 7d.%02d", entry.amount / 100, entry.amount % 100)
-          entry.addenda.each do |addendum|
-            line << [
-              addendum.reason_code,
-              addendum.reason_description.ljust(40),
-              (addendum.corrected_data if addendum.respond_to?(:corrected_data)).to_s.ljust(30),
-            ] * ' '
-          end
+        lines << batch_report(batch, opts[:format])
 
-          lines << line * ' '
+        batch.entries.each do |entry|
+          line = entry_report(entry, opts[:format])
+          lines << line
         end
       end
+
+      # Totals
       lines << ""
       lines << left_justify("Debit Total: ", 25) +
           sprintf("% 7d.%02d", @control.debit_total / 100, @control.debit_total % 100)
       lines << left_justify("Credit Total: ", 25) +
           sprintf("% 7d.%02d", @control.credit_total / 100, @control.credit_total % 100)
 
-      lines.join("\r\n")
+      lines.compact.join("\r\n")
+    end
+
+    def batch_report(batch, format = nil)
+      if opts[:format].to_sym == :long
+        "#{batch.header.effective_entry_date}".ljust(30)
+      else
+        nil
+      end
+    end
+
+    def entry_report(entry, format = nil)
+      line = [entry.individual_id_number]
+      line << left_justify(entry.individual_name + ": ", 25)
+      line << sprintf("% 7d.%02d", entry.amount / 100, entry.amount % 100)
+
+      if opts[:format].to_sym == :long
+        entry.addenda.each do |addendum|
+          line << [
+            addendum.reason_code,
+            addendum.reason_description.ljust(40),
+            (addendum.corrected_data if addendum.respond_to?(:corrected_data)).to_s.ljust(30),
+          ] * ' '
+        end
+      end
+
+      line
     end
 
     def parse(data, opts = {})
