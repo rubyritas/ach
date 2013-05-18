@@ -54,10 +54,7 @@ module ACH
       @batches.each do |batch|
         lines << batch_report(batch, opts[:format])
 
-        batch.entries.each do |entry|
-          line = entry_report(entry, opts[:format])
-          lines << line
-        end
+        batch.entries.each { |entry| lines << entry_report(entry, opts[:format]) }
       end
 
       # Totals
@@ -72,7 +69,7 @@ module ACH
 
     def batch_report(batch, format = nil)
       if format.to_s == 'long'
-        "\r\nBATCH: #{batch.header.effective_entry_date}\r\n"
+        "\r\nBATCH EFF DATE: #{batch.header.effective_entry_date}\r\n"
       else
         nil
       end
@@ -85,7 +82,7 @@ module ACH
         line << [ entry.individual_id_number.ljust(15) ]
       end
 
-      line << left_justify(entry.individual_name + ": ", 25)
+      line << left_justify("#{entry.individual_name}:", 25)
       line << sprintf("% 7d.%02d", entry.amount / 100, entry.amount % 100)
 
       if format.to_s == 'long'
