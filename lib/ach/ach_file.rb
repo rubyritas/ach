@@ -82,7 +82,7 @@ module ACH
         line << [ entry.individual_id_number.ljust(15) ]
       end
 
-      line << left_justify("#{entry.individual_name}:", 25)
+      line << left_justify("#{entry.individual_name}: ", 24)
       line << sprintf("% 7d.%02d", entry.amount / 100, entry.amount % 100)
 
       if format.to_s == 'long'
