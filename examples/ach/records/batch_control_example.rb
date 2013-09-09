@@ -34,4 +34,9 @@ describe ACH::Records::BatchControl do
       @record.to_ach.should == exp.join('')
     end
   end
+
+  it 'should allow for alphanumeric company identification codes ' do
+    lambda { @record.company_identification_code_designator = 'A' }.should_not raise_error
+  end
+
 end
