@@ -11,10 +11,8 @@ module ACH::Records
     field :company_name, String, lambda { |f| left_justify(f, 16)}
     field :company_discretionary_data, String,
         lambda { |f| left_justify(f, 20)}, ''
-    field :company_identification_code_designator, String, nil, '1',
-        /\A[0-9 ]\z/
     field :company_identification, String,
-        nil, nil, /\A[a-zA-Z0-9 ]{9}\z/
+        nil, nil, /\A[a-zA-Z0-9 ]{10}\z/
     # TODO This should be used to determine whether other records are valid for
     # this code. Should there be a Class for each code?
     # The default of PPD is purely for my benefit (Jared Morgan)

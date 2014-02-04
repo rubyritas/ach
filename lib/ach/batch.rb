@@ -11,26 +11,26 @@ module ACH
       @header = Records::BatchHeader.new
       @control = Records::BatchControl.new
     end
-    
-    def to_ach
-      @control.entry_count = @entries.length
-      @control.debit_total = 0
-      @control.credit_total = 0
-      @control.entry_hash = 0
-      has_debits = false
-      has_credits = false
+
+    def to_ach(batch_number)
+      @control.entry_count  = @entries.length
+      @control.entry_hash   = 0
+      @control.debit_total  = 0.00
+      @control.credit_total = 0.00
+      has_debits            = false
+      has_credits           = false
       
       @entries.each do |e|
-        if e.debit?
-          @control.debit_total += e.amount
-          has_debits = true
-        else
-          @control.credit_total += e.amount
-          has_credits = true
-        end
-        @control.entry_hash +=
-            (e.routing_number.to_i / 10) # Last digit is not part of Receiving DFI
+        e.populate_check_digit
+        e.debit? ? @control.debit_total += e.amount : @control.credit_total += e.amount
+        @control.entry_hash             += (e.routing_number.to_i / 10)
       end
+
+      has_debits  = true if @control.debit_total  != 0.00
+      has_credits = true if @control.credit_total != 0.00
+
+      @control.debit_total  = (@control.debit_total  * 100).to_i
+      @control.credit_total = (@control.credit_total * 100).to_i
       
       # Set service class codes if needed
       if @header.service_class_code.nil?
@@ -47,14 +47,9 @@ module ACH
         @control.service_class_code = @header.service_class_code 
       end
       
-      if ! @header.company_identification_code_designator.nil?
-        @control.company_identification_code_designator =
-          @header.company_identification_code_designator
-      end
-
-      @control.company_identification = @header.company_identification
-      @control.originating_dfi_identification = @header.originating_dfi_identification
-      @control.batch_number = @header.batch_number
+      @control.company_identification              = @header.company_identification
+      @control.originating_dfi_identification      = @header.originating_dfi_identification
+      @header.batch_number = @control.batch_number = batch_number
       
       [@header] + @entries + @addendas + [@control]
     end

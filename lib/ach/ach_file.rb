@@ -21,28 +21,29 @@ module ACH
     def to_s
       records = []
       records << @header
-      @batches.each { |b| records += b.to_ach }
+
+      batch_number = 0
+      @batches.each { |b| records += b.to_ach(batch_number+=1) }
+
       records << @control
 
       nines_needed = 10 - (records.length % 10)
       nines_needed = nines_needed % 10
       nines_needed.times { records << Records::Nines.new() }
 
-      @control.batch_count = @batches.length
-      @control.block_count = (records.length / 10).ceil
-
-      @control.entry_count = 0
-      @control.debit_total = 0
+      @control.batch_count  = @batches.length
+      @control.block_count  = (records.length / 10).ceil
+      @control.entry_count  = 0
+      @control.debit_total  = 0
       @control.credit_total = 0
-      @control.entry_hash = 0
+      @control.entry_hash   = 0
 
       @batches.each do | batch |
-        @control.entry_count += batch.entries.length
-        @control.debit_total += batch.control.debit_total
+        @control.entry_count  += batch.entries.length
+        @control.debit_total  += batch.control.debit_total
         @control.credit_total += batch.control.credit_total
-        @control.entry_hash += batch.control.entry_hash
+        @control.entry_hash   += batch.control.entry_hash
       end
-
 
       records.collect { |r| r.to_ach }.join("\r\n") + "\r\n"
     end
@@ -89,7 +90,7 @@ module ACH
           batch = ACH::Batch.new
           bh = batch.header
           bh.company_name                   = line[4..19].strip
-          bh.company_identification         = line[41..49].strip
+          bh.company_identification         = line[40..49].strip
           bh.standard_entry_class_code      = line[50..52].strip
           bh.company_entry_description      = line[53..62].strip
           bh.company_descriptive_date       = Date.parse(line[63..68]) rescue nil # this can be various formats
@@ -98,13 +99,12 @@ module ACH
         when '6'
           ed = ACH::CtxEntryDetail.new
           ed.transaction_code               = line[1..2]
-          ed.routing_number                 = line[3..11]
+          ed.routing_number                 = line[3..10]
           ed.account_number                 = line[12..28].strip
           ed.amount                         = line[29..38].to_i # cents
           ed.individual_id_number           = line[39..53].strip
           ed.individual_name                = line[54..75].strip
-          ed.originating_dfi_identification = line[79..86]
-          ed.trace_number                   = line[87..93].to_i
+          ed.trace_number                   = line[79..93].to_i
           batch.entries << ed
         when '7'
           type_code = line[1..2]

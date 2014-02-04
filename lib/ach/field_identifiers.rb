@@ -76,10 +76,5 @@ module ACH
     def left_justify(val, length)
       val[0..(length - 1)].ljust(length)
     end
-
-    # A routing number without leading space
-    def spaceless_routing_field(sym)
-      field sym, String, nil, nil, /\A\d{9}\z/
-    end
   end
 end
