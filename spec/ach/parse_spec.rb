@@ -1,10 +1,9 @@
-require 'example_helper'
-require 'date'
+require 'spec_helper'
 
 describe "Parse" do
   describe 'Returns and NOC' do
     before(:each) do
-      @data = File.read('examples/ach/fixtures/return_noc.txt')
+      @data = File.read('spec/ach/fixtures/return_noc.txt')
     end
 
     it 'should produce the same number of entries as the original ACH file' do

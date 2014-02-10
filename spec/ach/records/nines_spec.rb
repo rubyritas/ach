@@ -1,4 +1,4 @@
-require 'example_helper'
+require 'spec_helper'
 
 describe ACH::Records::Nines do
   before(:each) do

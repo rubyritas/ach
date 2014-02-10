@@ -1,4 +1,4 @@
-require 'example_helper'
+require 'spec_helper'
 require 'ach/records/shared/batch_summaries'
 
 describe ACH::Records::BatchControl do

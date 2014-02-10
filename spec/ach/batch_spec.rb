@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'example_helper'
+require 'spec_helper'
 
 describe ACH::Batch do
   before(:each) do
