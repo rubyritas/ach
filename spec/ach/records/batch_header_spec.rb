@@ -1,4 +1,4 @@
-require 'example_helper'
+require 'spec_helper'
 require 'ach/records/shared/batch_summaries'
 
 describe ACH::Records::BatchHeader do
@@ -21,7 +21,7 @@ describe ACH::Records::BatchHeader do
     it 'should be exactly three characters' do
       lambda { @record.standard_entry_class_code = 'CCDA' }.should raise_error(RuntimeError)
       lambda { @record.standard_entry_class_code = 'CC' }.should raise_error(RuntimeError)
-      lambda { @record.standard_entry_class_code = 'CCD' }.should_not raise_error(RuntimeError)
+      lambda { @record.standard_entry_class_code = 'CCD' }.should_not raise_error
     end
     
     it 'should be limited to real codes'

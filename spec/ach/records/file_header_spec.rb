@@ -1,4 +1,4 @@
-require 'example_helper'
+require 'spec_helper'
 
 describe ACH::Records::FileHeader do
   before(:each) do

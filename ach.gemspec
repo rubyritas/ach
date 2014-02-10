@@ -17,5 +17,6 @@ Gem::Specification.new do |s|
   s.test_files   = Dir.glob('examples/**/*')
   s.require_path = 'lib'
 
-  s.add_development_dependency('micronaut')
+  s.add_development_dependency('rake')
+  s.add_development_dependency('rspec', '~> 2.0')
 end
