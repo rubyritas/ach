@@ -14,7 +14,11 @@ module ACH
       @control = Records::FileControl.new
 
       if data
-        parse(data)
+        if (data =~ /\n|\r\n/).nil?
+          parse_fixed(data)
+        else
+          parse(data)
+        end
       end
     end
 
@@ -64,6 +68,10 @@ module ACH
           sprintf("% 7d.%02d", @control.credit_total / 100, @control.credit_total % 100)
 
       lines.join("\r\n")
+    end
+
+    def parse_fixed data
+      parse data.scan(/.{94}/).join("\n")
     end
 
     def parse data
