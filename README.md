@@ -71,6 +71,8 @@ ach.batches.first.entries.first.addenda.first.payment_data
 => "C05992222220280489      1211403932                                          1211"
 ```
 
+**Note:** When adding an amount to your ach file, it needs to be in cents. So you'll want to multiply any dollar amounts by 100
+
 ##Copyright
 
 Copyright (c) 2008-2009 Jared E Morgan, released under the MIT license
