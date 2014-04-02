@@ -14,7 +14,11 @@ module ACH
       @control = Records::FileControl.new
 
       if data
-        parse(data)
+        if (data =~ /\n|\r\n/).nil?
+          parse_fixed(data)
+        else
+          parse(data)
+        end
       end
     end
 
@@ -66,6 +70,10 @@ module ACH
       lines.join("\r\n")
     end
 
+    def parse_fixed data
+      parse data.scan(/.{94}/).join("\n")
+    end
+
     def parse data
       trace_number = 0
       fh =  self.header
@@ -89,7 +97,7 @@ module ACH
           batch = ACH::Batch.new
           bh = batch.header
           bh.company_name                   = line[4..19].strip
-          bh.company_identification         = line[40..49].strip.gsub(/\A1/, '')
+          bh.company_identification         = line[40..49].gsub(/\A1/, '')
           bh.standard_entry_class_code      = line[50..52].strip
           bh.company_entry_description      = line[53..62].strip
           bh.company_descriptive_date       = Date.parse(line[63..68]) rescue nil # this can be various formats

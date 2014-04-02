@@ -14,8 +14,7 @@ module ACH::Records
     field :debit_total, Integer, lambda { |f| sprintf('%012d', f)}
     field :credit_total, Integer, lambda { |f| sprintf('%012d', f)}
     field :company_identification, String,
-        lambda { |f| f.length == 10 ? f : "1#{f}" }, nil, /\A\d{9,10}\z/
-
+        lambda { |f| f.length == 10 ? f : "1#{f}" }, nil, /\A.{9,10}\z/
     field :message_authentication_code, String,
         lambda { |f| left_justify(f, 19)}, ''
 

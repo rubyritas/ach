@@ -12,6 +12,13 @@ describe "Parse" do
       entries.flatten.size.should == 3
     end
 
+    it 'should parse the fixed-length ACH file' do
+      fixed_length_file = File.read('spec/ach/fixtures/return_fixedlength.txt')
+      ach_file = ACH::ACHFile.new
+      ach_file.parse_fixed(fixed_length_file)
+      ach_file.batches.count.should == 3
+    end
+
     it "should parse return/notification of change file" do
       ach = ACH::ACHFile.new(@data)
       fh = ach.header
