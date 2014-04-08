@@ -1,0 +1,7 @@
+:tddium:
+  :ruby_version: ruby-2.0.0
+  :bundler_version: 1.3.5
+  :hooks:
+    :worker_setup: bundle exec rake
+  :test_pattern:
+    - test/**_test.rb
