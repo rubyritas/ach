@@ -1,0 +1,10 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    micronaut (0.3.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  micronaut
