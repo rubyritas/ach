@@ -41,12 +41,11 @@ module ACH
       @control.entry_hash = 0
 
       @batches.each do | batch |
-        @control.entry_count += batch.entries.length
+        @control.entry_count += batch.entries.inject(0) { |total, entry| total + entry.records_count }
         @control.debit_total += batch.control.debit_total
         @control.credit_total += batch.control.credit_total
         @control.entry_hash += batch.control.entry_hash
       end
-
 
       records.collect { |r| r.to_ach }.join("\r\n") + "\r\n"
     end

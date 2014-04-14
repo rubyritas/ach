@@ -66,5 +66,17 @@ describe ACH::Records::CtxEntryDetail do
     end
   end
 
+  describe '#records_count' do
+    it 'is 1 plus count of addenda' do
+      @entry.records_count.should == 1
 
+      @entry.addenda << ACH::Addendum.new
+      @entry.records_count.should == 2
+
+      @entry.addenda << ACH::Addendum.new
+      @entry.addenda << addendum_2
+
+      @entry.records_count.should == 3
+    end
+  end
 end

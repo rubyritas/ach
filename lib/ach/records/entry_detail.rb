@@ -58,6 +58,10 @@ module ACH::Records
       return ach_string
     end
 
+    # @return [Integer] Length of addenda plus 1, used by Batch#entry_count
+    def records_count
+      1 + self.addenda.length
+    end
   end
 
   class CtxEntryDetail < EntryDetail
