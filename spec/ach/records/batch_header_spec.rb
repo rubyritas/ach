@@ -26,4 +26,22 @@ describe ACH::Records::BatchHeader do
     
     it 'should be limited to real codes'
   end
+
+  describe '#settlement_date' do
+    it 'should be exactly three digits' do
+      lambda { @record.settlement_date = '0' }.should raise_error(RuntimeError)
+      lambda { @record.settlement_date = '0000' }.should raise_error(RuntimeError)
+      lambda { @record.settlement_date = '000' }.should_not raise_error
+    end
+
+    it 'should contain only digits' do
+      lambda { @record.settlement_date = '0A0' }.should raise_error(RuntimeError)
+    end
+
+    it 'should contain only three spaces' do
+      lambda { @record.settlement_date = '   ' }.should_not raise_error
+      lambda { @record.settlement_date = '  ' }.should raise_error(RuntimeError)
+      lambda { @record.settlement_date = '    ' }.should raise_error(RuntimeError)
+    end
+  end
 end
