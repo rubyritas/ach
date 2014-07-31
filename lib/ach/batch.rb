@@ -22,10 +22,10 @@ module ACH
 
       @entries.each do |e|
         if e.debit?
-          @control.debit_total += e.amount
+          @control.debit_total += e.amount.to_f
           has_debits = true
         else
-          @control.credit_total += e.amount
+          @control.credit_total += e.amount.to_f
           has_credits = true
         end
         @control.entry_hash +=
