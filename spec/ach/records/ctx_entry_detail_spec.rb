@@ -74,7 +74,6 @@ describe ACH::Records::CtxEntryDetail do
       @entry.records_count.should == 2
 
       @entry.addenda << ACH::Addendum.new
-      @entry.addenda << addendum_2
 
       @entry.records_count.should == 3
     end
