@@ -20,8 +20,8 @@ module ACH::Records
         lambda { |f| sprintf('%01d', f)}, 0
     field :originating_dfi_identification, String,
         nil, nil, /\A\d{8}\z/
-    field :trace_number, Integer, lambda { |f| sprintf('%07d', f)}, nil,
-        lambda { |n| n.to_s.length <= 7 }
+    field :trace_number, Integer, lambda { |f| sprintf('%015d', f)}, nil,
+        lambda { |n| n.to_s.length <= 15 }
 
     attr_reader :addenda
 
@@ -74,6 +74,6 @@ module ACH::Records
         lambda { |f| sprintf('%01d', f)}
     field :originating_dfi_identification, String,
         nil, nil, /\A\d{8}\z/
-    field :trace_number, Integer, lambda { |f| sprintf('%07d', f)}
+    field :trace_number, Integer, lambda { |f| sprintf('%015d', f)}
   end
 end
