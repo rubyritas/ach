@@ -51,14 +51,14 @@ module ACH
       @control.originating_dfi_identification = @header.originating_dfi_identification
       @control.batch_number = @header.batch_number
 
-      lines = []
+      entries_or_addendas = []
       @entries.each do |entry|
-        lines << entry
+        entries_or_addendas << entry
         addenda = @addendas.find { |a| a.entry_detail_sequence_number == entry.trace_number }
-        lines << addenda if addenda
+        entries_or_addendas << addenda if addenda
       end
 
-      [@header] + lines + [@control]
+      [@header] + entries_or_addendas + [@control]
     end
   end
 end
