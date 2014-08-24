@@ -1,4 +1,6 @@
 module ACH::Records
+  # PPD Entry Detail. Some other entry details, such as CCD, are close enough
+  # to use this class. Version 1.x will have support for other types.
   class EntryDetail < Record
     CREDIT_RECORD_TRANSACTION_CODE_ENDING_DIGITS = ["0", "1", "2", "3", "4"]
 
@@ -18,6 +20,13 @@ module ACH::Records
     field :discretionary_data, String, lambda { |f| left_justify(f, 2)}, '  '
     field :addenda_record_indicator, Integer,
         lambda { |f| sprintf('%01d', f)}, 0
+    # There's not actually an originating DFI identification field for PPD
+    # entries. Instead, it is suggested by the ACH spec that the ODFI be used
+    # as the first 8 digits of the 15-digit trace number. I (Jared Morgan)
+    # initially decided to treat the two elements of the trace number as
+    # diffent fields, but that has caused confusion. I now intend to make this
+    # an optional field which can used in generating the trace number, although
+    # I haven't actually worked out how that will function.
     field :originating_dfi_identification, String,
         nil, nil, /\A\d{8}\z/
     field :trace_number, Integer, lambda { |f| sprintf('%07d', f)}, nil,

@@ -16,6 +16,8 @@ You should consult a copy of the [ACH Rules](http://www.nacha.org) for details
 on individual fields. You can probably obtain a copy from your bank.
 
 ```ruby
+require 'ach'
+
 # Create ACH file
 ach = ACH::ACHFile.new
 trace_number = 0
