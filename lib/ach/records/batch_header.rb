@@ -14,7 +14,7 @@ module ACH::Records
     field :company_identification_code_designator, String, nil, '1',
         /\A[0-9A-Z ]\z/
     field :company_identification, String,
-        nil, nil, /\A\d{9}\z/
+        lambda { |f| f.rjust(9) }, nil, /\A\d{7,9}\z/
     # TODO This should be used to determine whether other records are valid for
     # this code. Should there be a Class for each code?
     # The default of PPD is purely for my benefit (Jared Morgan)
