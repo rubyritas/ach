@@ -30,6 +30,10 @@ module ACH::Records
       !credit?
     end
 
+    def transaction_type
+      credit? ? :credit : :debit
+    end
+
     def amount_value
       return self.amount
     end
