@@ -129,7 +129,8 @@ module ACH
           batch = ACH::Batch.new
           bh = batch.header
           bh.company_name                           = line[4..19].strip
-          bh.company_identification_code_designator = line[39..40].strip
+          bh.company_discretionary_data             = line[20..39].strip
+          bh.company_identification_code_designator = line[40]
           bh.company_identification                 = line[41..49].strip
           bh.standard_entry_class_code              = line[50..52].strip
           bh.company_entry_description              = line[53..62].strip
