@@ -76,7 +76,6 @@ module ACH
     end
 
     def parse data
-      trace_number = 0
       fh =  self.header
       batch = nil
       bh = nil
@@ -140,7 +139,6 @@ module ACH
       end
 
       self.batches << batch unless batch.nil?
-      batch.entries.each{ |entry| entry.trace_number = (trace_number += 1) }
       to_s
     end
   end
