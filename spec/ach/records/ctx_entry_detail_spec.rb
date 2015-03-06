@@ -15,10 +15,10 @@ describe ACH::Records::CtxEntryDetail do
 
   describe '#addenda_records?' do
     it 'should do report if it contains addena records' do
-      @entry.addenda_records?.should == false
+      expect(@entry.addenda_records?).to eq(false)
 
       @entry.addenda << ACH::Addendum.new
-      @entry.addenda_records?.should == true
+      expect(@entry.addenda_records?).to eq(true)
     end
 
     it 'should print addenda records as part of to_ach' do
@@ -26,23 +26,23 @@ describe ACH::Records::CtxEntryDetail do
       addendum_1.payment_data = ""
       addendum_1.sequence_number = "1"
       @entry.addenda << addendum_1
-      @entry.addenda.size.should == 1
+      expect(@entry.addenda.size).to eq(1)
 
       addendum_2 = ACH::Addendum.new
       addendum_2.payment_data = ""
       addendum_2.sequence_number = "2"
       @entry.addenda << addendum_2
-      @entry.addenda.size.should == 2
+      expect(@entry.addenda.size).to eq(2)
 
       # 705 is the beginning of an addendum record
       ach_string = @entry.to_ach
-      ach_string.scan("705").count.should == 2
+      expect(ach_string.scan("705").count).to eq(2)
     end
 
     it 'should print fields different from a CCD/PPD record' do
       ach_string = @entry.to_ach
-      ach_string.slice(39, 15).should == "1              "
-      ach_string.slice(58, 16).should == "#{@entry.individual_name.upcase}     "
+      expect(ach_string.slice(39, 15)).to eq("1              ")
+      expect(ach_string.slice(58, 16)).to eq("#{@entry.individual_name.upcase}     ")
     end
 
     it 'should set addenda record indicators, count, and trace numbers' do
@@ -58,24 +58,24 @@ describe ACH::Records::CtxEntryDetail do
 
       ach_string = @entry.to_ach
       # Test addenda record indicator
-      ach_string.slice(78, 1).should == "1"
+      expect(ach_string.slice(78, 1)).to eq("1")
       # Test number of addenda records
-      ach_string.slice(54, 4).should == "0001"
+      expect(ach_string.slice(54, 4)).to eq("0001")
       # Test for trace number in each addendum record
-      ach_string.scan(expected_trace_number).count.should == 2
+      expect(ach_string.scan(expected_trace_number).count).to eq(2)
     end
   end
 
   describe '#records_count' do
     it 'is 1 plus count of addenda' do
-      @entry.records_count.should == 1
+      expect(@entry.records_count).to eq(1)
 
       @entry.addenda << ACH::Addendum.new
-      @entry.records_count.should == 2
+      expect(@entry.records_count).to eq(2)
 
       @entry.addenda << ACH::Addendum.new
 
-      @entry.records_count.should == 3
+      expect(@entry.records_count).to eq(3)
     end
   end
 end

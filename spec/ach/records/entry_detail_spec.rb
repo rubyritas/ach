@@ -5,8 +5,8 @@ module ACH
     describe EntryDetail do
       describe '#record_type' do
         it "is a constant field with the value of '6'" do
-          subject.record_type_to_ach.should == '6'
-          subject.should_not respond_to(:record_type=)
+          expect(subject.record_type_to_ach).to eq('6')
+          expect(subject).not_to respond_to(:record_type=)
         end
       end
 

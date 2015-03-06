@@ -11,12 +11,12 @@ describe ACH::FieldIdentifiers do
     it 'should validate against a Regexp' do
       @klass.field(:sample, String, nil, nil, /\A\w{5}\Z/)
       record = @klass.new
-      lambda { record.sample = 'abcd' }.should raise_error(RuntimeError)
-      record.sample.should be_nil
-      lambda { record.sample = 'abcdef' }.should raise_error(RuntimeError)
-      record.sample.should be_nil
-      lambda { record.sample = 'abcde' }.should_not raise_error
-      record.sample.should == 'abcde'
+      expect { record.sample = 'abcd' }.to raise_error(RuntimeError)
+      expect(record.sample).to be_nil
+      expect { record.sample = 'abcdef' }.to raise_error(RuntimeError)
+      expect(record.sample).to be_nil
+      expect { record.sample = 'abcde' }.not_to raise_error
+      expect(record.sample).to eq('abcde')
     end
       
     it 'should validate against a Proc' do
@@ -26,21 +26,21 @@ describe ACH::FieldIdentifiers do
       
       @klass.field(:sample, String, nil, nil, block)
       record = @klass.new
-      lambda { record.sample = 5 }.should raise_error(RuntimeError)
-      record.sample.should be_nil
-      lambda { record.sample = 501 }.should raise_error(RuntimeError)
-      record.sample.should be_nil
-      lambda { record.sample = 1 }.should_not raise_error
-      record.sample.should == 1
-      lambda { record.sample = 500 }.should_not raise_error
-      record.sample.should == 500
+      expect { record.sample = 5 }.to raise_error(RuntimeError)
+      expect(record.sample).to be_nil
+      expect { record.sample = 501 }.to raise_error(RuntimeError)
+      expect(record.sample).to be_nil
+      expect { record.sample = 1 }.not_to raise_error
+      expect(record.sample).to eq(1)
+      expect { record.sample = 500 }.not_to raise_error
+      expect(record.sample).to eq(500)
     end
     
     it 'should set instance variable' do
       @klass.field(:sample, String)
       record = @klass.new
       record.sample = 'abcde'
-      record.instance_variable_get(:@sample).should == 'abcde'
+      expect(record.instance_variable_get(:@sample)).to eq('abcde')
     end
 
   end

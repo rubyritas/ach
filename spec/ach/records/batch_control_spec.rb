@@ -31,7 +31,7 @@ describe ACH::Records::BatchControl do
         '32345678',
         '0000005'
       ]
-      @record.to_ach.should == exp.join('')
+      expect(@record.to_ach).to eq(exp.join(''))
     end
   end
 end
