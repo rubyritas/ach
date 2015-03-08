@@ -10,18 +10,18 @@ describe ACH::Records::BatchHeader do
   
   describe '#standard_entry_class_code' do
     it 'should default to PPD' do
-      @record.standard_entry_class_code_to_ach.should == 'PPD'
+      expect(@record.standard_entry_class_code_to_ach).to eq('PPD')
     end
     
     it 'should be capitalized' do
       @record.standard_entry_class_code = 'ccd'
-      @record.standard_entry_class_code_to_ach.should == 'CCD'
+      expect(@record.standard_entry_class_code_to_ach).to eq('CCD')
     end
     
     it 'should be exactly three characters' do
-      lambda { @record.standard_entry_class_code = 'CCDA' }.should raise_error(RuntimeError)
-      lambda { @record.standard_entry_class_code = 'CC' }.should raise_error(RuntimeError)
-      lambda { @record.standard_entry_class_code = 'CCD' }.should_not raise_error
+      expect { @record.standard_entry_class_code = 'CCDA' }.to raise_error(RuntimeError)
+      expect { @record.standard_entry_class_code = 'CC' }.to raise_error(RuntimeError)
+      expect { @record.standard_entry_class_code = 'CCD' }.not_to raise_error
     end
     
     it 'should be limited to real codes'
@@ -29,19 +29,19 @@ describe ACH::Records::BatchHeader do
 
   describe '#settlement_date' do
     it 'should be exactly three digits' do
-      lambda { @record.settlement_date = '0' }.should raise_error(RuntimeError)
-      lambda { @record.settlement_date = '0000' }.should raise_error(RuntimeError)
-      lambda { @record.settlement_date = '000' }.should_not raise_error
+      expect { @record.settlement_date = '0' }.to raise_error(RuntimeError)
+      expect { @record.settlement_date = '0000' }.to raise_error(RuntimeError)
+      expect { @record.settlement_date = '000' }.not_to raise_error
     end
 
     it 'should contain only digits' do
-      lambda { @record.settlement_date = '0A0' }.should raise_error(RuntimeError)
+      expect { @record.settlement_date = '0A0' }.to raise_error(RuntimeError)
     end
 
     it 'should contain only three spaces' do
-      lambda { @record.settlement_date = '   ' }.should_not raise_error
-      lambda { @record.settlement_date = '  ' }.should raise_error(RuntimeError)
-      lambda { @record.settlement_date = '    ' }.should raise_error(RuntimeError)
+      expect { @record.settlement_date = '   ' }.not_to raise_error
+      expect { @record.settlement_date = '  ' }.to raise_error(RuntimeError)
+      expect { @record.settlement_date = '    ' }.to raise_error(RuntimeError)
     end
   end
 end

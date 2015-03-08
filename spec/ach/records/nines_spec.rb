@@ -7,7 +7,7 @@ describe ACH::Records::Nines do
 
   describe '#to_ach' do
     it 'should generate 94 copies of the digit "9"' do
-      @nines.to_ach.should == ('9' * 94)
+      expect(@nines.to_ach).to eq('9' * 94)
     end
   end
 end

@@ -11,29 +11,29 @@ describe ACH::Records::FileHeader do
 
   describe '#to_ach' do
     it 'has 94 characters' do
-      @header.to_ach.should have(94).characters
+      expect(@header.to_ach.size).to eq(94)
     end
   end
 
   describe '#immediate_origin_to_ach' do
     it 'adds a leading space when only 9 digits' do
-      @header.immediate_origin_to_ach.should == ' 123456789'
+      expect(@header.immediate_origin_to_ach).to eq(' 123456789')
     end
 
     it 'does not add a leading space when 10 digits' do
       @header.immediate_origin = '1234567890'
-      @header.immediate_origin_to_ach.should == '1234567890'
+      expect(@header.immediate_origin_to_ach).to eq('1234567890')
     end
   end
 
   describe '#immediate_origin_to_ach' do
     it 'adds a leading space when only 9 digits' do
-      @header.immediate_destination_to_ach.should == ' 123456789'
+      expect(@header.immediate_destination_to_ach).to eq(' 123456789')
     end
 
     it 'does not add a leading space when 10 digits' do
       @header.immediate_destination = '1234567890'
-      @header.immediate_destination_to_ach.should == '1234567890'
+      expect(@header.immediate_destination_to_ach).to eq('1234567890')
     end
   end
 end
