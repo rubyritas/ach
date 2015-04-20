@@ -1,5 +1,7 @@
 #ACH
 
+![](https://travis-ci.org/jm81/ach.svg)
+
 ach is a Ruby helper for builder ACH files. In particular, it helps with field
 order and alignment, and adds padding lines to end of file.
 
