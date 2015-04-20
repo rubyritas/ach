@@ -27,6 +27,7 @@ require 'iconv' if RUBY_VERSION < '1.9'
 require 'ach/field_identifiers'
 require 'ach/ach_file'
 require 'ach/batch'
+require 'ach/next_federal_reserve_effective_date'
 require 'ach/version'
 
 # Require records files
