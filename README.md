@@ -1,6 +1,6 @@
 #ACH
 
-![](https://travis-ci.org/jm81/ach.svg)
+[![Build Status](https://travis-ci.org/jm81/ach.svg?branch=master)](https://travis-ci.org/jm81/ach)
 
 ach is a Ruby helper for builder ACH files. In particular, it helps with field
 order and alignment, and adds padding lines to end of file.
@@ -26,43 +26,40 @@ trace_number = 0
 
 # File Header
 fh = ach.header
-fh.immediate_destination = "000000000"
-fh.immediate_destination_name = "BANK NAME"
-fh.immediate_origin = "000000000"
-fh.immediate_origin_name = "BANK NAME"
+fh.immediate_destination = '000000000'
+fh.immediate_destination_name = 'BANK NAME'
+fh.immediate_origin = '000000000'
+fh.immediate_origin_name = 'BANK NAME'
 
 # Batch
 batch = ACH::Batch.new
 bh = batch.header
-bh.company_name = "Company Name"
-bh.company_identification = "123456789" # Use 10 characters if you're not using an EIN
+bh.company_name = 'Company Name'
+bh.company_identification = '123456789' # Use 10 characters if you're not using an EIN
 bh.standard_entry_class_code = 'PPD'
-bh.company_entry_description = "DESCRIPTION"
+bh.company_entry_description = 'DESCRIPTION'
 bh.company_descriptive_date = Date.today
-bh.effective_entry_date = (Date.today + 1)
-bh.originating_dfi_identification = "00000000"
+bh.effective_entry_date = ACH::NextFederalReserveEffectiveDate.new(Date.today).result
+bh.originating_dfi_identification = '00000000'
 ach.batches << batch
 
 # Detail Entry
 ed = ACH::EntryDetail.new
 ed.transaction_code = ACH::CHECKING_CREDIT
-ed.routing_number = "000000000"
-ed.account_number = "00000000000"
+ed.routing_number = '000000000'
+ed.account_number = '00000000000'
 ed.amount = 100 # In cents
-ed.individual_id_number = "Employee Name"
-ed.individual_name = "Employee Name"
+ed.individual_id_number = 'Employee Name'
+ed.individual_name = 'Employee Name'
 ed.originating_dfi_identification = '00000000'
 batch.entries << ed
 # ... Additional detail entries, possibly including *offsetting entry*, if needed.
 
 # Insert trace numbers
-batch.entries.each{ |entry| entry.trace_number = (trace_number += 1) }
+batch.entries.each.with_index(1) { |entry, index| entry.trace_number = index }
 
 
-output = ach.to_s
-File.open("ach.txt", 'w') do |f|
-  f.write output
-end
+File.write('ach.txt', ach.to_s)
 
 p ach.report
 ```
