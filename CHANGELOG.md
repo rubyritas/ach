@@ -1,6 +1,6 @@
 ### 0.4.10
 
-* Add calculator for valid effective date (@airpollak)
+* Add calculator for valid effective date (@aripollak)
 
 ### 0.4.9
 
