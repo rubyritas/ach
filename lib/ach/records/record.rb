@@ -11,8 +11,11 @@ module ACH
       
       extend(FieldIdentifiers)
       
+      attr_accessor :case_sensitive
+      
       def to_ach
-        self.class.fields.collect { |f| send("#{f}_to_ach") }.join('').upcase
+        to_ach = self.class.fields.collect { |f| send("#{f}_to_ach") }.join('')
+        case_sensitive ? to_ach : to_ach.upcase
       end
     end
   end
