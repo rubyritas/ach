@@ -86,14 +86,10 @@ module ACH
         type = line[0].chr
         case type
         when '1'
-          fh.priority_code                  = line[01..02]
           fh.immediate_destination          = line[03..12].strip
           fh.immediate_origin               = line[13..22].strip
           fh.transmission_datetime          = Time.utc('20'+line[23..24], line[25..26], line[27..28], line[29..30], line[31..32])
           fh.file_id_modifier               = line[33..33]
-          fh.record_size                    = line[34..36]
-          fh.block_record                   = line[37..38]
-          fh.format_code                    = line[39]
           fh.immediate_destination_name     = line[40..62].strip
           fh.immediate_origin_name          = line[63..85].strip
           fh.reference_code                 = line[86..93].strip
@@ -103,14 +99,13 @@ module ACH
           bh = batch.header
           bh.service_class_code             = line[1..3]
           bh.company_name                   = line[4..19].strip
-          bh.discrentionary_data            = line[20..39].strip
+          bh.company_discretionary_data     = line[20..39].strip
           bh.company_identification         = line[40..49].gsub(/\A1/, '')
           bh.standard_entry_class_code      = line[50..52].strip
           bh.company_entry_description      = line[53..62].strip
           bh.company_descriptive_date       = Date.parse(line[63..68]) rescue nil # this can be various formats
           bh.effective_entry_date           = Date.parse(line[69..74])
           bh.settlement_date                = Date.parse(line[75..77]) rescue nil
-          bh.originator_status              = line[78]
           bh.originating_dfi_identification = line[79..86].strip
         when '6'
           ed = ACH::CtxEntryDetail.new
@@ -121,7 +116,7 @@ module ACH
           ed.individual_id_number           = line[39..53].strip
           ed.individual_name                = line[54..75].strip
           ed.discretionary_data             = line[76..77].strip
-          ed.addenda_indicator              = line[78]
+          ed.addenda_record_indicator       = line[78]
           ed.originating_dfi_identification = line[79..86]
           ed.trace_number                   = line[87..93].to_i
           batch.entries << ed
