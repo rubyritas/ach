@@ -1,3 +1,11 @@
+### 0.5.0
+
+* Add ACH::InvalidError and use instead of RuntimeError for validation errors.
+
+### 0.4.11
+
+* Add support for records to be case sensitive (@binarypaladin)
+
 ### 0.4.10
 
 * Add calculator for valid effective date (@aripollak)
