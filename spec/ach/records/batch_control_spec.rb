@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'ach/records/shared/batch_summaries'
 
 describe ACH::Records::BatchControl do
   before(:each) do
@@ -14,7 +13,7 @@ describe ACH::Records::BatchControl do
     @record.batch_number = 5
   end
 
-  self.instance_eval(&SharedExamples.batch_summaries)
+  it_behaves_like 'a batch summary'
 
   describe '#to_ach' do
     it 'should generate record string' do
