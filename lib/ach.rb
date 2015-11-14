@@ -20,6 +20,9 @@ module ACH
     225, # ACH Debits Only
     280  # ACH Automated Accounting Advices
   ]
+
+  class InvalidError < RuntimeError
+  end
 end
 
 require 'time'

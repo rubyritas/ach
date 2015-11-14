@@ -7,7 +7,7 @@ shared_examples 'a transaction code' do
     end
 
     ['', '2', '222', 'ab', '2a'].each do |val|
-      expect{ subject.transaction_code = val }.to raise_error(RuntimeError)
+      expect{ subject.transaction_code = val }.to raise_error(ACH::InvalidError)
     end
   end
 

@@ -7,7 +7,7 @@ shared_examples 'a routing number' do
     end
 
     ['12345678', '1234567890', '12345678A', 123456789].each do |val|
-      expect{ subject.routing_number = val }.to raise_error(RuntimeError)
+      expect{ subject.routing_number = val }.to raise_error(ACH::InvalidError)
     end
   end
 
