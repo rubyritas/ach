@@ -17,6 +17,10 @@ module ACH
       describe '#routing_number' do
         it_behaves_like 'a routing number (String)'
       end
+
+      describe '#account_number' do
+        it_behaves_like 'an account number (String)'
+      end
     end
   end
 end
