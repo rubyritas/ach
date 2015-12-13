@@ -1,4 +1,4 @@
-shared_examples 'a transaction code' do
+shared_examples 'a transaction code (String)' do
   it 'is a string with two digits' do
     ['22', '23', '29', '32', '88'].each do |val|
       subject.transaction_code = val

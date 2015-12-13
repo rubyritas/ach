@@ -11,11 +11,11 @@ module ACH
       end
 
       describe '#transaction_code' do
-        it_behaves_like 'a transaction code'
+        it_behaves_like 'a transaction code (String)'
       end
 
       describe '#routing_number' do
-        it_behaves_like 'a routing number'
+        it_behaves_like 'a routing number (String)'
       end
     end
   end

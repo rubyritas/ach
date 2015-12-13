@@ -1,4 +1,4 @@
-shared_examples 'a routing number' do
+shared_examples 'a routing number (String)' do
   it 'is a string with nine digits' do
     ['123456789', '012345678'].each do |val|
       subject.routing_number = val
