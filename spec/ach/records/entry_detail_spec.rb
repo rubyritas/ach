@@ -21,6 +21,11 @@ module ACH
       describe '#account_number' do
         it_behaves_like 'an account number (String)'
       end
+
+      describe '#amount' do
+        let(:amount_length) { 10 }
+        it_behaves_like 'an amount (Integer)'
+      end
     end
   end
 end
