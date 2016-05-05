@@ -24,9 +24,24 @@ describe ACH::Records::FileHeader do
       @header.immediate_origin = '1234567890'
       expect(@header.immediate_origin_to_ach).to eq('1234567890')
     end
+
+    it 'allows a leading letter' do
+      @header.immediate_origin = 'A123456789'
+      expect(@header.immediate_origin_to_ach).to eq('A123456789')
+    end
+
+    it 'allows a leading number' do
+      @header.immediate_origin = '1234567890'
+      expect(@header.immediate_origin_to_ach).to eq('1234567890')
+    end
+
+    it 'allows a leading space' do
+      @header.immediate_origin = ' 123456789'
+      expect(@header.immediate_origin_to_ach).to eq(' 123456789')
+    end
   end
 
-  describe '#immediate_origin_to_ach' do
+  describe '#immediate_destination_to_ach' do
     it 'adds a leading space when only 9 digits' do
       expect(@header.immediate_destination_to_ach).to eq(' 123456789')
     end
