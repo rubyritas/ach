@@ -1,1 +1,1 @@
---profile --colour --format progress --tag focus
+--profile --colour --format progress --tag focus --order rand
