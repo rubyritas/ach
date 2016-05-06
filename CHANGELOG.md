@@ -1,6 +1,7 @@
 ### 0.5.0
 
 * Add ACH::InvalidError and use instead of RuntimeError for validation errors.
+* Support leading characters for `immediate_origin` (@phlipper)
 
 ### 0.4.11
 

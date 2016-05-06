@@ -35,6 +35,3 @@ DEPENDENCIES
   autotest
   rake
   rspec (~> 3.2)
-
-BUNDLED WITH
-   1.12.1
