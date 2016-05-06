@@ -1,3 +1,9 @@
+bundler_args: "--jobs 4 --retry 3"
 cache: bundler
 language: ruby
-rvm: 2.0.0
+sudo: false
+rvm:
+- 2.0.0
+- 2.1.10
+- 2.2.5
+- 2.3.1
