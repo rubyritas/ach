@@ -1,5 +1,5 @@
 shared_examples 'an amount (Integer)' do
-  it 'produces a 0-pqdded string of a set length' do
+  it 'produces a 0-padded string of a set length' do
     {
       '123' => '123', 9876543210 => '9876543210', 124.12 => '124'
     }.each do |input, str|
