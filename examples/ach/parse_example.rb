@@ -66,5 +66,15 @@ describe "Parse" do
       ad.addenda_information.should == 'INVALID'
     end
 
+    it 'should properly parse a blank company designator' do
+      ach = ACH::ACHFile.new(@data)
+      ach.batches.first.header.company_identification_code_designator.should == '1'
+
+      ach.batches.first.header.company_identification_code_designator = ' '
+      new_file = ACH::ACHFile.new(ach.to_s)
+      new_file.to_s.each_line { |line| line.should have(96).characters }
+      new_file.batches.first.header.company_identification_code_designator.should == ' '
+    end
+
   end
 end

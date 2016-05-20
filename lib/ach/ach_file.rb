@@ -8,13 +8,13 @@ module ACH
     attr_reader :header
     attr_reader :control
 
-    def initialize data=nil
+    def initialize(data = nil, opts = {})
       @batches = []
       @header = Records::FileHeader.new
       @control = Records::FileControl.new
 
       if data
-        parse(data)
+        parse(data, opts)
       end
     end
 
@@ -47,31 +47,71 @@ module ACH
       records.collect { |r| r.to_ach }.join("\r\n") + "\r\n"
     end
 
-    def report
+    def report(opts = {})
       to_s # To ensure correct records
       lines = []
 
-      @batches.each do | batch |
-        batch.entries.each do | entry |
-          lines << left_justify(entry.individual_name + ": ", 25) +
-              sprintf("% 7d.%02d", entry.amount / 100, entry.amount % 100)
-        end
+      @batches.each do |batch|
+        lines << batch_report(batch, opts[:format])
+
+        batch.entries.each { |entry| lines << entry_report(entry, opts[:format]) }
       end
+
+      # Totals
       lines << ""
       lines << left_justify("Debit Total: ", 25) +
           sprintf("% 7d.%02d", @control.debit_total / 100, @control.debit_total % 100)
       lines << left_justify("Credit Total: ", 25) +
           sprintf("% 7d.%02d", @control.credit_total / 100, @control.credit_total % 100)
 
-      lines.join("\r\n")
+      lines.compact.join("\r\n")
     end
 
-    def parse data
+    def batch_report(batch, format = nil)
+      if format.to_s == 'long'
+        "\r\nBATCH EFF DATE: #{batch.header.effective_entry_date}\r\n"
+      else
+        nil
+      end
+    end
+
+    def entry_report(entry, format = nil)
+      line = []
+
+      if format.to_s == 'long'
+        line << [ entry.individual_id_number.ljust(15) ]
+      end
+
+      line << left_justify("#{entry.individual_name}: ", 24)
+      line << sprintf("% 7d.%02d", entry.amount / 100, entry.amount % 100)
+
+      if format.to_s == 'long'
+        entry.addenda.each do |addendum|
+          line << [
+            addendum.reason_code,
+            addendum.reason_description.ljust(40),
+            (addendum.corrected_data if addendum.respond_to?(:corrected_data)).to_s.ljust(30),
+          ] * ' '
+        end
+      end
+
+      line.join(' ')
+    end
+
+    def parse(data, opts = {})
       trace_number = 0
       fh =  self.header
       batch = nil
       bh = nil
       ed = nil
+
+      # Allow the constructor to define the type of entry detail items the parser should
+      # expect.
+      entry_detail_type = case String(opts[:entry_detail_type]).upcase
+                          when /PPD/i then ACH::EntryDetail
+                          when /CTX/i then ACH::CtxEntryDetail
+                          else ACH::CtxEntryDetail
+                          end
 
       data.strip.split(/\n|\r\n/).each do |line|
         type = line[0].chr
@@ -88,15 +128,17 @@ module ACH
           self.batches << batch unless batch.nil?
           batch = ACH::Batch.new
           bh = batch.header
-          bh.company_name                   = line[4..19].strip
-          bh.company_identification         = line[41..49].strip
-          bh.standard_entry_class_code      = line[50..52].strip
-          bh.company_entry_description      = line[53..62].strip
-          bh.company_descriptive_date       = Date.parse(line[63..68]) rescue nil # this can be various formats
-          bh.effective_entry_date           = Date.parse(line[69..74])
-          bh.originating_dfi_identification = line[79..86].strip
+          bh.company_name                           = line[4..19].strip
+          bh.company_discretionary_data             = line[20..39].strip
+          bh.company_identification_code_designator = line[40]
+          bh.company_identification                 = line[41..49].strip
+          bh.standard_entry_class_code              = line[50..52].strip
+          bh.company_entry_description              = line[53..62].strip
+          bh.company_descriptive_date               = Date.parse(line[63..68]) rescue nil # this can be various formats
+          bh.effective_entry_date                   = Date.parse(line[69..74])
+          bh.originating_dfi_identification         = line[79..86].strip
         when '6'
-          ed = ACH::CtxEntryDetail.new
+          ed = entry_detail_type.new
           ed.transaction_code               = line[1..2]
           ed.routing_number                 = line[3..11]
           ed.account_number                 = line[12..28].strip
