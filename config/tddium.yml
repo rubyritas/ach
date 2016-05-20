@@ -1,5 +1,0 @@
-:tddium:
-  :ruby_version: ruby-2.0.0
-  :bundler_version: 1.3.5
-  :tests:
-    - 'bundle exec rake'
