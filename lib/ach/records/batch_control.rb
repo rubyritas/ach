@@ -16,7 +16,7 @@ module ACH::Records
     field :company_identification_code_designator, String, nil, '1',
         /\A[0-9A-Z ]\z/
     field :company_identification, String,
-        lambda { |f| f.rjust(9) }, nil, /\A\d{7,9}\z/
+        lambda { |f| f.rjust(9) }, nil, /\A[\dA-Z]\d{6,8}\z/
 
     field :message_authentication_code, String,
         lambda { |f| left_justify(f, 19)}, ''
