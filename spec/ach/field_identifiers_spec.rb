@@ -2,8 +2,10 @@ require 'spec_helper'
 
 describe ACH::FieldIdentifiers do
   describe 'setter' do
+    let(:record_class) { Class.new(ACH::Records::Record) }
+
     before(:each) do
-      @klass = Class.new(ACH::Records::Record)
+      @klass = record_class
       @klass.instance_variable_set(:@fields, [])
     end
 
@@ -40,6 +42,35 @@ describe ACH::FieldIdentifiers do
       record = @klass.new
       record.sample = 'abcde'
       expect(record.instance_variable_get(:@sample)).to eq('abcde')
+    end
+
+    context 'given nil value' do
+      before :each do
+        record_class.field(:sample, String, nil, nil, /\A\w\Z/)
+      end
+
+      let(:record) { record_class.new }
+
+      context 'no default' do
+        it 'validates the nil value' do
+          expect { record.sample = nil }.to raise_error(ACH::InvalidError)
+        end
+      end
+
+      context 'has default' do
+        before :each do
+          record_class.field(:default_sample, String, nil, 'Z', /\A\w\Z/)\
+        end
+
+        it 'sets the value to nil' do
+          expect(record.instance_variable_get(:@default_sample)).to be(nil)
+          expect(record.default_sample).to be(nil)
+        end
+
+        it 'uses the default in #to_ach' do
+          expect(record.default_sample_to_ach).to eq('Z')
+        end
+      end
     end
   end
 end

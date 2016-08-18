@@ -20,7 +20,9 @@ module ACH
 
       # setter (includes validations)
       define_method "#{name}=" do | val |
-        if validate.kind_of?(Regexp)
+        if val.nil? && default
+          # Leave value as nil, so that default is used.
+        elsif validate.kind_of?(Regexp)
           unless val =~ validate
             raise InvalidError, "#{val} does not match Regexp #{validate} for field #{name}"
           end
