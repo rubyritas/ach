@@ -1,5 +1,7 @@
 module ACH::Records
   class BatchHeader < Record
+    attr_accessor :full_company_identification
+
     @fields = []
 
     const_field :record_type, '5'

@@ -98,6 +98,11 @@ module ACH
           bh = batch.header
           bh.company_name                   = line[4..19].strip
           bh.company_identification         = line[40..49].gsub(/\A1/, '')
+
+          # Does not try to guess if company identification is an EIN
+          # TODO fix differently when I feel like breaking backwards
+          # compatibility.
+          bh.full_company_identification    = line[40..49]
           bh.standard_entry_class_code      = line[50..52].strip
           bh.company_entry_description      = line[53..62].strip
           bh.company_descriptive_date       = Date.parse(line[63..68]) rescue nil # this can be various formats

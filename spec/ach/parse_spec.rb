@@ -35,6 +35,7 @@ describe "Parse" do
       bh = batch.header
       expect(bh.company_name).to eq("COMPANY INC")
       expect(bh.company_identification).to eq("412345678")
+      expect(bh.full_company_identification).to eq("1412345678")
       expect(bh.standard_entry_class_code).to eq('COR')
       expect(bh.company_entry_description).to eq("DESCRIPT")
       expect(bh.company_descriptive_date).to eq(Date.parse('121015'))

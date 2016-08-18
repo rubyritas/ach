@@ -4,6 +4,7 @@ module ACH
     attr_reader :addendas
     attr_reader :header
     attr_reader :control
+    attr_accessor :full_company_identification
 
     def initialize
       @entries = []
