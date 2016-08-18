@@ -1,3 +1,10 @@
+### 0.5.1
+
+- Parsing sets BatchHeader#full_company_identification for company
+  identifications that are not EINs.
+- Setting a field with a default value to nil no longer raises a validation
+  error.
+
 ### 0.5.0
 
 * Add ACH::InvalidError and use instead of RuntimeError for validation errors.
