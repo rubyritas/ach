@@ -1,9 +1,31 @@
 bundler_args: "--jobs 4 --retry 3"
 cache: bundler
+gemfile:
+- gemfiles/holidays_5.0.gemfile
+- gemfiles/holidays_4.7.gemfile
+- gemfiles/holidays_4.6.gemfile
+- gemfiles/holidays_4.5.gemfile
+- gemfiles/holidays_4.4.gemfile
+- gemfiles/holidays_4.3.gemfile
+- gemfiles/holidays_4.2.gemfile
+- gemfiles/holidays_4.1.gemfile
+- gemfiles/holidays_4.0.gemfile
+- gemfiles/holidays_3.3.gemfile
+- gemfiles/holidays_3.2.gemfile
+- gemfiles/holidays_3.1.gemfile
+- gemfiles/holidays_3.0.gemfile
+- gemfiles/holidays_2.2.gemfile
+- gemfiles/holidays_2.1.gemfile
+- gemfiles/holidays_2.0.gemfile
+- gemfiles/holidays_1.2.gemfile
 language: ruby
-sudo: false
+matrix:
+  exclude:
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_5.0.gemfile
 rvm:
 - 2.0.0
 - 2.1.10
 - 2.2.5
 - 2.3.1
+sudo: false
