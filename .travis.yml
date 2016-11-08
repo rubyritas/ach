@@ -1,6 +1,7 @@
 bundler_args: "--jobs 4 --retry 3"
 cache: bundler
 gemfile:
+- gemfiles/holidays_5.1.gemfile
 - gemfiles/holidays_5.0.gemfile
 - gemfiles/holidays_4.7.gemfile
 - gemfiles/holidays_4.6.gemfile
@@ -23,6 +24,8 @@ matrix:
   exclude:
   - rvm: 2.0.0
     gemfile: gemfiles/holidays_5.0.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_5.1.gemfile
 rvm:
 - 2.0.0
 - 2.1.10

@@ -1,6 +1,10 @@
 # ################
 # 5.x
 # ################
+appraise "holidays-5.1" do
+  gem "holidays", "~> 5.1.0"
+end
+
 appraise "holidays-5.0" do
   gem "holidays", "~> 5.0.0"
 end
