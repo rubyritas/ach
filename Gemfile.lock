@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     ach (0.5.2)
-      holidays (>= 1.2.0, < 5.2.0)
+      holidays (>= 1.2.0, < 5.4.0)
 
 GEM
   remote: https://rubygems.org/
