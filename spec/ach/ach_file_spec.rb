@@ -47,6 +47,26 @@ describe ACH::ACHFile do
   end
 
   describe '#to_s' do
+    describe 'incrementing batch numbers' do
+      before(:each) do
+        add_batch ach_file, 1
+        add_batch ach_file, 1
+        add_batch ach_file, 1
+      end
+
+      context 'batch numbers not set' do
+        it 'increments batch numbers' do
+          lines = ach_file.to_s.split("\r\n")
+          expect(lines[1][-1]).to eq('1')
+          expect(lines[3][-1]).to eq('1')
+          expect(lines[4][-1]).to eq('2')
+          expect(lines[6][-1]).to eq('2')
+          expect(lines[7][-1]).to eq('3')
+          expect(lines[9][-1]).to eq('3')
+        end
+      end
+    end
+
     describe 'padding with 9s' do
       let(:nines) { '9' * 94 }
 

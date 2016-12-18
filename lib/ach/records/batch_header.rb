@@ -33,6 +33,6 @@ module ACH::Records
     field :originating_dfi_identification, String,
         nil, nil, /\A\d{8}\z/
 
-    field :batch_number, Integer, lambda { |f| sprintf('%07d', f)}, 1
+    field :batch_number, Integer, lambda { |f| sprintf('%07d', f)}, nil
   end
 end

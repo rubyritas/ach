@@ -25,7 +25,11 @@ module ACH
     def to_s
       records = []
       records << @header
-      @batches.each { |b| records += b.to_ach }
+
+      @batches.each_with_index do |batch, index|
+        batch.header.batch_number ||= index + 1
+        records += batch.to_ach
+      end
       records << @control
 
       nines_needed = 10 - (records.length % 10)
