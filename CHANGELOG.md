@@ -1,3 +1,7 @@
+### 0.5.4
+
+- Increment batch numbers if not manually set.
+
 ### 0.5.1
 
 - Parsing sets BatchHeader#full_company_identification for company
