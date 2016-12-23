@@ -30,7 +30,7 @@ module ACH
     end
 
     def holiday?(date)
-      Holidays.on(date, :federal_reserve).any?
+      Holidays.on(date, :federal_reserve, :observed).any?
     end
 
     def holiday_or_weekend?(date)
