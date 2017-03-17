@@ -7,6 +7,13 @@ describe ACH::Records::BatchHeader do
 
   it_behaves_like 'a batch summary'
 
+  describe 'same day ach' do
+    it 'should create with string company_descriptive_date' do
+      @record.company_descriptive_date = 'sd1300'
+      expect(@record.company_descriptive_date_to_ach).to eq('SD1300')
+    end
+  end
+
   describe '#standard_entry_class_code' do
     it 'should default to PPD' do
       expect(@record.standard_entry_class_code_to_ach).to eq('PPD')
