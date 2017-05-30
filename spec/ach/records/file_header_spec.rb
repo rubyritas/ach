@@ -39,6 +39,11 @@ describe ACH::Records::FileHeader do
       @header.immediate_origin = ' 123456789'
       expect(@header.immediate_origin_to_ach).to eq(' 123456789')
     end
+
+    it 'allows a trailing space' do
+      @header.immediate_origin = '123456789 '
+      expect(@header.immediate_origin_to_ach).to eq('123456789 ')
+    end
   end
 
   describe '#immediate_destination_to_ach' do
