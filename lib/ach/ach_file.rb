@@ -100,7 +100,9 @@ module ACH
           self.batches << batch unless batch.nil?
           batch = ACH::Batch.new
           bh = batch.header
+          bh.service_class_code             = line[1..3]
           bh.company_name                   = line[4..19].strip
+          bh.company_discretionary_data     = line[20..39].strip
           bh.company_identification         = line[40..49].gsub(/\A1/, '')
 
           # Does not try to guess if company identification is an EIN
@@ -113,7 +115,7 @@ module ACH
           bh.effective_entry_date           = Date.parse(line[69..74])
           bh.originating_dfi_identification = line[79..86].strip
         when '6'
-          ed = ACH::CtxEntryDetail.new
+          ed = ACH::EntryDetail.new
           ed.transaction_code               = line[1..2]
           ed.routing_number                 = line[3..11]
           ed.account_number                 = line[12..28].strip
