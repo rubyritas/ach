@@ -71,6 +71,10 @@ module ACH::Records
     def records_count
       1 + self.addenda.length
     end
+
+    def lines_count
+      records_count
+    end
   end
 
   class CtxEntryDetail < EntryDetail

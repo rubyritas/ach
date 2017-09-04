@@ -31,8 +31,7 @@ module ACH
         records += batch.to_ach
       end
       records << @control
-
-      nines_needed = 10 - (records.length % 10)
+      nines_needed = 10 - (records.inject(0) { |sum, r| sum += r.lines_count } % 10)
       nines_needed = nines_needed % 10
       nines_needed.times { records << Records::Nines.new() }
 
