@@ -112,6 +112,7 @@ module ACH
           bh.company_entry_description      = line[53..62].strip
           bh.company_descriptive_date       = Date.parse(line[63..68]) rescue nil # this can be various formats
           bh.effective_entry_date           = Date.parse(line[69..74])
+          bh.settlement_date                = line[75..77]
           bh.originating_dfi_identification = line[79..86].strip
         when '6'
           ed = ACH::EntryDetail.new
