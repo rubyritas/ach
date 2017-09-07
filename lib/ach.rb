@@ -20,13 +20,11 @@ module ACH
     225, # ACH Debits Only
     280  # ACH Automated Accounting Advices
   ]
-
-  class InvalidError < RuntimeError
-  end
 end
 
 require 'time'
 require 'iconv' if RUBY_VERSION < '1.9'
+require 'ach/errors'
 require 'ach/field_identifiers'
 require 'ach/ach_file'
 require 'ach/batch'
