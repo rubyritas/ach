@@ -143,7 +143,7 @@ module ACH
         when '9'
           # skip
         else
-          raise "Didn't recognize type code #{type} for this line:\n#{line}"
+          raise UnrecognizedTypeCode, "Didn't recognize type code #{type} for this line:\n#{line}"
         end
       end
 
