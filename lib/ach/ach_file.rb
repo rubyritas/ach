@@ -22,7 +22,8 @@ module ACH
       end
     end
 
-    def to_s
+    # @param eol [String] Line ending, default to CRLF
+    def to_s eol = "\r\n"
       records = []
       records << @header
 
@@ -50,7 +51,7 @@ module ACH
         @control.entry_hash += batch.control.entry_hash
       end
 
-      records.collect { |r| r.to_ach }.join("\r\n") + "\r\n"
+      records.collect { |r| r.to_ach }.join(eol) + eol
     end
 
     def report
@@ -145,7 +146,7 @@ module ACH
         when '9'
           # skip
         else
-          raise "Didn't recognize type code #{type} for this line:\n#{line}"
+          raise UnrecognizedTypeCode, "Didn't recognize type code #{type} for this line:\n#{line}"
         end
       end
 

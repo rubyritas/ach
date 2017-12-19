@@ -126,5 +126,26 @@ describe ACH::ACHFile do
         end
       end
     end
+
+    describe 'eol param' do
+      context 'default' do
+        subject(:output) { ach_file.to_s }
+
+        it 'uses CRLF' do
+          expect(output.split("\r\n").length).to eq(10)
+          expect(output[-2..-1]).to eq("\r\n")
+        end
+      end
+
+      context 'param given' do
+        subject(:output) { ach_file.to_s("\n") }
+        it 'uses the param' do
+          expect(output.split("\r\n").length).to eq(1)
+          expect(output.split("\n").length).to eq(10)
+          expect(output[-2..-1]).to_not eq("\r\n")
+          expect(output[-1]).to eq("\n")
+        end
+      end
+    end
   end
 end
