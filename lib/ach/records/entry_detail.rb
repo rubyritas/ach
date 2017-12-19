@@ -35,6 +35,7 @@ module ACH::Records
     attr_reader :addenda
 
     def initialize
+      super
       @addenda = []
     end
 
