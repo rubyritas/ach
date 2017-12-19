@@ -11,10 +11,10 @@ module ACH
       
       extend(FieldIdentifiers)
       
-      attr_writer :case_sensitive
+      attr_accessor :case_sensitive
 
-      def case_sensitive
-        @case_sensitive.nil? ? true : @case_sensitive
+      def initialize
+        self.case_sensitive = true
       end
       
       def to_ach
