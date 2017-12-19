@@ -73,5 +73,9 @@ describe "Parse" do
       expect(ad.addenda_information).to eq('INVALID')
     end
 
+    it 'should raise an appropriate error if the type code was not recognized' do
+      ach_file = ACH::ACHFile.new
+      expect { ach_file.parse('INVALID DATA') }.to raise_error(ACH::UnrecognizedTypeCode)
+    end
   end
 end
