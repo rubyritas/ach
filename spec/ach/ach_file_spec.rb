@@ -56,7 +56,7 @@ describe ACH::ACHFile do
 
       context 'batch numbers not set' do
         it 'increments batch numbers' do
-          lines = ach_file.to_s.split("\r\n")
+          lines = ach_file.to_s.split("\n") # PNM-433 to_s now returs line ending in \n instead of \r\n
           expect(lines[1][-1]).to eq('1')
           expect(lines[3][-1]).to eq('1')
           expect(lines[4][-1]).to eq('2')
@@ -76,7 +76,7 @@ describe ACH::ACHFile do
         end
 
         it 'pads with 9s' do
-          lines = ach_file.to_s.split("\r\n")
+          lines = ach_file.to_s.split("\n") # PNM-433 to_s now returs line ending in \n instead of \r\n
           expect(lines.length).to eq(10)
 
           lines[0..6].each do |line|
@@ -89,7 +89,7 @@ describe ACH::ACHFile do
 
           add_batch ach_file, 5 # add 7 => 14 records total
 
-          lines = ach_file.to_s.split("\r\n")
+          lines = ach_file.to_s.split("\n") # PNM-433 to_s now returs line ending in \n instead of \r\n
           expect(lines.length).to eq(20)
 
           lines[0..13].each do |line|
@@ -108,7 +108,7 @@ describe ACH::ACHFile do
         end
 
         it 'does not pad with 9s' do
-          lines = ach_file.to_s.split("\r\n")
+          lines = ach_file.to_s.split("\n") # PNM-433 to_s now returs line ending in \n instead of \r\n
           expect(lines.length).to eq(10)
 
           lines.each do |line|
@@ -117,7 +117,7 @@ describe ACH::ACHFile do
 
           add_batch ach_file, 8 # plus batch header and footer
 
-          lines = ach_file.to_s.split("\r\n")
+          lines = ach_file.to_s.split("\n") # PNM-433 to_s now returs line ending in \n instead of \r\n
           expect(lines.length).to eq(20)
 
           lines.each do |line|
@@ -132,8 +132,8 @@ describe ACH::ACHFile do
         subject(:output) { ach_file.to_s }
 
         it 'uses CRLF' do
-          expect(output.split("\r\n").length).to eq(10)
-          expect(output[-2..-1]).to eq("\r\n")
+          expect(output.split("\n").length).to eq(10) # PNM-433 to_s now returs line ending in \n instead of \r\n
+          expect(output[-2..-1]).to eq("9\n") # PNM-433 to_s now returs line ending in \n instead of \r\n
         end
       end
 

@@ -11,7 +11,11 @@ module ACH::Records
     
     field :debit_total, Integer, lambda { |f| sprintf('%012d', f)}
     field :credit_total, Integer, lambda { |f| sprintf('%012d', f)}
-    const_field :reserved, (' ' * 39)
+
+    ### PNM-433 ###
+    # add filler as a field so we can parse the nacha return code in this field
+    # was const_field :reserved, (' ' * 39)
+    field :filler, String, lambda { |f| left_justify(f, 39)}, " "
   end
 end
 

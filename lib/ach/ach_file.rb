@@ -33,6 +33,10 @@ module ACH
       end
       records << @control
 
+      ### PNM-433 ###
+      ### Making nine lines optional breaks file control, in the interest of minimal gem file modification
+      ### use the wrapper to add/remove nine lines in nacha support concern and leave this as it is
+
       nines_needed = 10 - (records.length % 10)
       nines_needed = nines_needed % 10
       nines_needed.times { records << Records::Nines.new() }
@@ -52,7 +56,12 @@ module ACH
         @control.entry_hash += batch.control.entry_hash
       end
 
-      records.collect { |r| r.to_ach }.join(eol) + eol
+      ### PNM-433 ###
+      # tried to change eol to just \n, but this breaks addenda lines where "\r\n is default
+      # in short just replace "\r\n of the whole nacha string with "\n" to keep this simple
+      # was ==>  records.collect { |r| r.to_ach }.join(eol) + eol
+
+      (records.collect { |r| r.to_ach }.join(eol) + eol).gsub("\r\n", "\n")
     end
 
     def report
@@ -102,6 +111,11 @@ module ACH
           batch = ACH::Batch.new
           bh = batch.header
           bh.company_name                   = line[4..19].strip
+          ### PNM-433 ###
+          # add ability to parse company discretionary data which is used to in bapi ach confirmation
+          # heavily used in wells fargo nacha ach confirmation, which in turn marks the batch as settled
+          # was ==> not defined in the ach gem file
+          bh.company_discretionary_data     = line[20..39].strip
           bh.company_identification         = line[40..49].gsub(/\A1/, '')
 
           # Does not try to guess if company identification is an EIN
@@ -142,7 +156,13 @@ module ACH
         when '8'
           # skip
         when '9'
-          # skip
+          ### PNM-433 ###
+          # Need this to parse nacha response code from the response file
+          # the filler is a custom field in the file control where we look for response code
+          # was ==> skip and not defined in the ach gem file
+
+          @control = Records::FileControl.new
+          @control.filler = line[55..93]
         else
           raise UnrecognizedTypeCode, "Didn't recognize type code #{type} for this line:\n#{line}"
         end
