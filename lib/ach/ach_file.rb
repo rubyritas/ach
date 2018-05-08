@@ -105,6 +105,7 @@ module ACH
           batch = ACH::Batch.new
           bh = batch.header
           bh.company_name                   = line[4..19].strip
+          bh.company_discretionary_data     = line[20..39].strip
           bh.company_identification         = line[40..49].gsub(/\A1/, '')
 
           # Does not try to guess if company identification is an EIN
@@ -145,7 +146,8 @@ module ACH
         when '8'
           # skip
         when '9'
-          # skip
+          @control = Records::FileControl.new
+          @control.filler = line[55..93]
         else
           raise UnrecognizedTypeCode, "Didn't recognize type code #{type} for this line:\n#{line}"
         end
