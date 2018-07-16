@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    ach (0.5.9)
-      holidays (>= 1.2.0, < 5.4.0)
+    ach (0.5.10)
+      holidays (>= 1.2.0, <= 6.4.0)
 
 GEM
   remote: https://rubygems.org/
@@ -15,7 +15,7 @@ GEM
     autotest (4.4.6)
       ZenTest (>= 4.4.1)
     diff-lcs (1.2.5)
-    holidays (5.1.0)
+    holidays (6.4.0)
     rake (11.3.0)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
@@ -41,3 +41,6 @@ DEPENDENCIES
   autotest
   rake
   rspec (~> 3.2)
+
+BUNDLED WITH
+   1.16.2
