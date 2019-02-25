@@ -16,6 +16,23 @@ describe ACH::ACHFile do
     ach
   end
 
+  def add_batch_with_addenda ach, entry_details = 0
+    batch = ACH::Batch.new
+    bh = batch.header
+    bh.company_name = 'Company Name'
+    bh.company_identification = '123456789'
+    bh.standard_entry_class_code = 'PPD'
+    bh.company_entry_description = 'DESCRIPTION'
+    bh.company_descriptive_date = Date.today
+    bh.effective_entry_date =
+      ACH::NextFederalReserveEffectiveDate.new(Date.today).result
+    bh.originating_dfi_identification = '00000000'
+
+    entry_details.times { add_detail_with_addenda(batch) }
+
+    ach.batches << batch
+  end
+
   def add_batch ach, entry_details = 0
     batch = ACH::Batch.new
     bh = batch.header
@@ -46,6 +63,26 @@ describe ACH::ACHFile do
     batch.entries << ed
   end
 
+  def add_detail_with_addenda batch
+    ed = ACH::EntryDetail.new
+    ed.transaction_code = ACH::CHECKING_CREDIT
+    ed.routing_number = '000000000'
+    ed.account_number = '00000000000'
+    ed.amount = 100 # In cents
+    ed.individual_id_number = 'Employee Name'
+    ed.individual_name = 'Employee Name'
+    ed.originating_dfi_identification = '00000000'
+    ed.trace_number = 1
+
+    addendum = ACH::Addendum.new
+    addendum.payment_data = 'Sample Addendum'
+    addendum.sequence_number = 1
+    #further_credit_addendum.entry_detail_sequence_number = 1
+    ed.addenda << addendum
+
+    batch.entries << ed
+  end
+
   describe '#to_s' do
     describe 'incrementing batch numbers' do
       before(:each) do
@@ -69,6 +106,39 @@ describe ACH::ACHFile do
 
     describe 'padding with 9s' do
       let(:nines) { '9' * 94 }
+
+      context 'number of records mod 10 is not 0 with addenda' do
+        before(:each) do
+          add_batch_with_addenda ach_file, 2 # 8 records total
+        end
+
+        it 'pads with 9s' do
+          lines = ach_file.to_s.split("\r\n")
+
+          expect(lines.length).to eq(10)
+
+          lines[0..7].each do |line|
+            expect(line).to_not eq(nines)
+          end
+
+          lines[8..9].each do |line|
+            expect(line).to eq(nines)
+          end
+
+          add_batch ach_file, 5 # add 7 => 19 records total
+
+          lines = ach_file.to_s.split("\r\n")
+          expect(lines.length).to eq(20)
+
+          lines[0..14].each do |line|
+            expect(line).to_not eq(nines)
+          end
+
+          lines[15..19].each do |line|
+            expect(line).to eq(nines)
+          end
+        end
+      end
 
       context 'number of records mod 10 is not 0' do
         before(:each) do
