@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ach (0.5.7)
+    ach (0.5.7.2)
       holidays (>= 1.2.0, < 5.4.0)
 
 GEM
@@ -41,3 +41,6 @@ DEPENDENCIES
   autotest
   rake
   rspec (~> 3.2)
+
+BUNDLED WITH
+   1.11.2

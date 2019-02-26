@@ -25,14 +25,17 @@ module ACH
     def to_s
       records = []
       records << @header
+      addenda_entry_count = 0
 
       @batches.each_with_index do |batch, index|
         batch.header.batch_number ||= index + 1
+        addenda_entry_count += batch.entries.flat_map{|e| e.addenda}.length
         records += batch.to_ach
       end
       records << @control
+      total_length = addenda_entry_count + records.length
 
-      nines_needed = 10 - (records.length % 10)
+      nines_needed = 10 - (total_length % 10)
       nines_needed = nines_needed % 10
       nines_needed.times { records << Records::Nines.new() }
 
