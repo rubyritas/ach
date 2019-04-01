@@ -33,7 +33,11 @@ module ACH
       end
       records << @control
 
-      nines_needed = 10 - (records.length % 10)
+      records_count = records.inject(0) do |sum, record|
+        sum + record.records_count
+      end
+
+      nines_needed = (10 - records_count) % 10
       nines_needed = nines_needed % 10
       nines_needed.times { records << Records::Nines.new() }
 
