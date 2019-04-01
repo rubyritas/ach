@@ -1,6 +1,11 @@
 bundler_args: "--jobs 4 --retry 3"
 cache: bundler
 gemfile:
+- gemfiles/holidays_6.4.gemfile
+- gemfiles/holidays_6.3.gemfile
+- gemfiles/holidays_6.2.gemfile
+- gemfiles/holidays_6.1.gemfile
+- gemfiles/holidays_6.0.gemfile
 - gemfiles/holidays_5.3.gemfile
 - gemfiles/holidays_5.2.gemfile
 - gemfiles/holidays_5.1.gemfile
@@ -32,6 +37,23 @@ matrix:
     gemfile: gemfiles/holidays_5.2.gemfile
   - rvm: 2.0.0
     gemfile: gemfiles/holidays_5.3.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_6.0.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_6.1.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_6.2.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_6.3.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_6.4.gemfile
+  - rvm: 2.1.10
+    gemfile: gemfiles/holidays_6.2.gemfile
+  - rvm: 2.1.10
+    gemfile: gemfiles/holidays_6.3.gemfile
+  - rvm: 2.1.10
+    gemfile: gemfiles/holidays_6.4.gemfile
+
 rvm:
 - 2.0.0
 - 2.1.10
