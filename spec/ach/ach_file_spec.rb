@@ -109,7 +109,6 @@ describe ACH::ACHFile do
 
             ach_file.batches.first.entries.last.addenda << addendum
             lines = ach_file.to_s.split("\r\n")
-            p lines
             expect(lines.length).to eq(10)
 
             lines[0..7].each do |line|
