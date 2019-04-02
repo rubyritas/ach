@@ -22,5 +22,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rake')
   s.add_development_dependency('rspec', '~> 3.2')
 
-  s.add_runtime_dependency('holidays', '>= 1.2.0', '< 5.4.0')
+  s.add_runtime_dependency('holidays', '>= 1.2.0', '<= 6.4.0')
 end
