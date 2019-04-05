@@ -2,6 +2,12 @@ require 'holidays'
 
 module ACH
   class NextFederalReserveEffectiveDate
+    FEDERAL_RESERVE_SYMBOL =
+      if Gem.loaded_specs['holidays'].version < Gem::Version.new('7.0.0')
+        :federal_reserve
+      else
+        :federalreserve
+      end
     def initialize(submission_date)
       @submission_date = submission_date
     end
@@ -30,7 +36,7 @@ module ACH
     end
 
     def holiday?(date)
-      Holidays.on(date, :federal_reserve, :observed).any?
+      Holidays.on(date, FEDERAL_RESERVE_SYMBOL, :observed).any?
     end
 
     def holiday_or_weekend?(date)
