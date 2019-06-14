@@ -134,6 +134,9 @@ describe ACH::ACHFile do
             expect(line).to_not eq(nines)
           end
 
+          control_row = lines[14]
+          expect(control_row[12]).to eq((lines.length / 10).ceil.to_s)
+
           lines[15..19].each do |line|
             expect(line).to eq(nines)
           end
@@ -166,6 +169,9 @@ describe ACH::ACHFile do
             expect(line).to_not eq(nines)
           end
 
+          control_row = lines[13]
+          expect(control_row[12]).to eq((lines.length / 10).ceil.to_s)
+
           lines[14..19].each do |line|
             expect(line).to eq(nines)
           end
@@ -189,6 +195,9 @@ describe ACH::ACHFile do
 
           lines = ach_file.to_s.split("\r\n")
           expect(lines.length).to eq(20)
+
+          control_row = lines[19]
+          expect(control_row[12]).to eq((lines.length / 10).ceil.to_s)
 
           lines.each do |line|
             expect(line).to_not eq(nines)

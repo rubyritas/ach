@@ -11,3 +11,4 @@ pkg
 *.gem
 install.log
 *.gemfile.lock
+.idea

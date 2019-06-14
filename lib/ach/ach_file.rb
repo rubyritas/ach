@@ -40,7 +40,7 @@ module ACH
       nines_needed.times { records << Records::Nines.new() }
 
       @control.batch_count = @batches.length
-      @control.block_count = (records.length / 10).ceil
+      @control.block_count = ((records.length + addenda_entry_count) / 10).ceil
 
       @control.entry_count = 0
       @control.debit_total = 0
