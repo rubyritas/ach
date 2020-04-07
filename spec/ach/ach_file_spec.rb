@@ -1,4 +1,6 @@
-require 'example_helper'
+# frozen_string_literal: true
+
+require 'spec_helper'
 
 describe ACH::ACHFile do
   before(:each) do

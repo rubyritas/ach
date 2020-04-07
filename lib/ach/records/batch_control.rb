@@ -13,10 +13,8 @@ module ACH::Records
     field :entry_hash, Integer, lambda { |f| sprintf('%010d', f % (10 ** 10))}
     field :debit_total, Integer, lambda { |f| sprintf('%012d', f)}
     field :credit_total, Integer, lambda { |f| sprintf('%012d', f)}
-    field :company_identification_code_designator, String, nil, '1',
-        /\A[0-9A-Z ]\z/
     field :company_identification, String,
-        lambda { |f| f.rjust(9) }, nil, /\A[\dA-Z]\d{6,8}\z/
+        lambda { |f| f.length == 10 ? f : "1#{f}" }, nil, /\A[\da-zA-Z ]{9,10}\z/
 
     field :message_authentication_code, String,
         lambda { |f| left_justify(f, 19)}, ''

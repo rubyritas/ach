@@ -1,19 +1,15 @@
-$:.push File.expand_path('../lib', __FILE__)
+#!/usr/bin/env rake
+
+require 'rubygems'
+require 'bundler/setup'
+Bundler.require
 require 'ach/version'
 
-require 'micronaut/rake_task'
-Micronaut::RakeTask.new(:examples) do |examples|
-  examples.pattern = './examples/**/*_example.rb'
-  examples.ruby_opts << '-Ilib -Iexamples'
-end
+require 'rspec/core/rake_task'
 
-Micronaut::RakeTask.new(:rcov) do |examples|
-  examples.pattern = 'examples/**/*_example.rb'
-  examples.rcov_opts = '-Ilib -Iexamples'
-  examples.rcov = true
-end
+RSpec::Core::RakeTask.new(:spec)
 
-task :default => :examples
+task :default  => :spec
 
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
