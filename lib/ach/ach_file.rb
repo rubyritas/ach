@@ -14,7 +14,7 @@ module ACH
       @control = Records::FileControl.new
 
       if data
-        if (data.encode(Encoding.find('ASCII'),ENCODING_OPTIONS) =~ /\n|\r\n/).nil?
+        if (data.encode(Encoding.find('ASCII'), **ENCODING_OPTIONS) =~ /\n|\r\n/).nil?
           parse_fixed(data)
         else
           parse(data)
