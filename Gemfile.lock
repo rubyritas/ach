@@ -45,7 +45,7 @@ DEPENDENCIES
   ach!
   appraisal
   autotest
-  rake
+  rake (>= 12.3.3)
   rspec (~> 3.2)
 
 BUNDLED WITH
