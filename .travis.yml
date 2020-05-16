@@ -1,6 +1,7 @@
 bundler_args: "--jobs 4 --retry 3"
 cache: bundler
 gemfile:
+- gemfiles/holidays_8.2.gemfile
 - gemfiles/holidays_7.1.gemfile
 - gemfiles/holidays_7.0.gemfile
 - gemfiles/holidays_6.6.1.gemfile
@@ -93,4 +94,7 @@ rvm:
 - 2.1.10
 - 2.2.5
 - 2.3.1
+- 2.5.8
+- 2.6.6
+- 2.7.1
 sudo: false
