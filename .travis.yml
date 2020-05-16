@@ -73,6 +73,8 @@ matrix:
     gemfile: gemfiles/holidays_7.0.gemfile
   - rvm: 2.0.0
     gemfile: gemfiles/holidays_7.1.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_8.2.gemfile
   - rvm: 2.1.10
     gemfile: gemfiles/holidays_6.2.gemfile
   - rvm: 2.1.10
@@ -89,6 +91,12 @@ matrix:
     gemfile: gemfiles/holidays_7.0.gemfile
   - rvm: 2.1.10
     gemfile: gemfiles/holidays_7.1.gemfile
+  - rvm: 2.1.10
+    gemfile: gemfiles/holidays_8.2.gemfile
+  - rvm: 2.2.5
+    gemfile: gemfiles/holidays_8.2.gemfile
+  - rvm: 2.3.1
+    gemfile: gemfiles/holidays_8.2.gemfile
 rvm:
 - 2.0.0
 - 2.1.10
