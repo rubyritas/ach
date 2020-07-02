@@ -14,7 +14,7 @@ module ACH
     end
 
     def to_ach
-      @control.entry_count = @entries.inject(0) { |total, entry| total + entry.records_count }
+      @control.entry_count = @entries.map(&:records_count).reduce(:+).to_i
       @control.debit_total = 0
       @control.credit_total = 0
       @control.entry_hash = 0

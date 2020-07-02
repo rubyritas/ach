@@ -22,6 +22,7 @@ module ACH
       end
     end
 
+
     # @param eol [String] Line ending, default to CRLF
     def to_s eol = "\r\n"
       records = []
@@ -33,16 +34,14 @@ module ACH
       end
       records << @control
 
-      records_count = records.inject(0) do |sum, record|
-        sum + record.records_count
-      end
-
+      records_count = records.map(&:records_count).reduce(:+)
       nines_needed = (10 - records_count) % 10
       nines_needed = nines_needed % 10
       nines_needed.times { records << Records::Nines.new() }
 
+      records_count = records.map(&:records_count).reduce(:+)
       @control.batch_count = @batches.length
-      @control.block_count = (records.length / 10).ceil
+      @control.block_count = (records_count / 10).ceil
 
       @control.entry_count = 0
       @control.debit_total = 0
