@@ -2,15 +2,15 @@ module ACH
   module Records
     class Record
       @fields = []
-      
+
       class << self
         def fields
           @fields
         end
       end
-      
+
       extend(FieldIdentifiers)
-      
+
       attr_accessor :case_sensitive
 
       def initialize
@@ -22,7 +22,7 @@ module ACH
         case_sensitive ? to_ach : to_ach.upcase
       end
 
-      def lines_count
+      def records_count
         1
       end
     end

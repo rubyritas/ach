@@ -1,6 +1,22 @@
 bundler_args: "--jobs 4 --retry 3"
 cache: bundler
 gemfile:
+- gemfiles/holidays_8.2.gemfile
+- gemfiles/holidays_7.1.gemfile
+- gemfiles/holidays_7.0.gemfile
+- gemfiles/holidays_6.6.1.gemfile
+- gemfiles/holidays_6.6.gemfile
+- gemfiles/holidays_6.5.gemfile
+- gemfiles/holidays_6.4.gemfile
+- gemfiles/holidays_6.3.gemfile
+- gemfiles/holidays_6.2.gemfile
+- gemfiles/holidays_6.1.gemfile
+- gemfiles/holidays_6.0.gemfile
+- gemfiles/holidays_5.7.gemfile
+- gemfiles/holidays_5.6.gemfile
+- gemfiles/holidays_5.5.1.gemfile
+- gemfiles/holidays_5.5.gemfile
+- gemfiles/holidays_5.4.gemfile
 - gemfiles/holidays_5.3.gemfile
 - gemfiles/holidays_5.2.gemfile
 - gemfiles/holidays_5.1.gemfile
@@ -16,11 +32,6 @@ gemfile:
 - gemfiles/holidays_3.3.gemfile
 - gemfiles/holidays_3.2.gemfile
 - gemfiles/holidays_3.1.gemfile
-- gemfiles/holidays_3.0.gemfile
-- gemfiles/holidays_2.2.gemfile
-- gemfiles/holidays_2.1.gemfile
-- gemfiles/holidays_2.0.gemfile
-- gemfiles/holidays_1.2.gemfile
 language: ruby
 matrix:
   exclude:
@@ -32,9 +43,66 @@ matrix:
     gemfile: gemfiles/holidays_5.2.gemfile
   - rvm: 2.0.0
     gemfile: gemfiles/holidays_5.3.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_5.4.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_5.5.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_5.5.1.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_5.6.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_5.7.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_6.0.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_6.1.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_6.2.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_6.3.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_6.4.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_6.5.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_6.6.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_6.6.1.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_7.0.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_7.1.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/holidays_8.2.gemfile
+  - rvm: 2.1.10
+    gemfile: gemfiles/holidays_6.2.gemfile
+  - rvm: 2.1.10
+    gemfile: gemfiles/holidays_6.3.gemfile
+  - rvm: 2.1.10
+    gemfile: gemfiles/holidays_6.4.gemfile
+  - rvm: 2.1.10
+    gemfile: gemfiles/holidays_6.5.gemfile
+  - rvm: 2.1.10
+    gemfile: gemfiles/holidays_6.6.gemfile
+  - rvm: 2.1.10
+    gemfile: gemfiles/holidays_6.6.1.gemfile
+  - rvm: 2.1.10
+    gemfile: gemfiles/holidays_7.0.gemfile
+  - rvm: 2.1.10
+    gemfile: gemfiles/holidays_7.1.gemfile
+  - rvm: 2.1.10
+    gemfile: gemfiles/holidays_8.2.gemfile
+  - rvm: 2.2.5
+    gemfile: gemfiles/holidays_8.2.gemfile
+  - rvm: 2.3.1
+    gemfile: gemfiles/holidays_8.2.gemfile
 rvm:
 - 2.0.0
 - 2.1.10
 - 2.2.5
 - 2.3.1
+- 2.5.8
+- 2.6.6
+- 2.7.1
 sudo: false

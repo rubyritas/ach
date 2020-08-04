@@ -100,6 +100,26 @@ describe ACH::ACHFile do
             expect(line).to eq(nines)
           end
         end
+
+        context 'has addendum records' do
+          it 'accounts for addendum records' do
+            addendum = ACH::Addendum.new
+            addendum.sequence_number = 1
+            addendum.payment_data = 'Data'
+
+            ach_file.batches.first.entries.last.addenda << addendum
+            lines = ach_file.to_s.split("\r\n")
+            expect(lines.length).to eq(10)
+
+            lines[0..7].each do |line|
+              expect(line).to_not eq(nines)
+            end
+
+            lines[8..9].each do |line|
+              expect(line).to eq(nines)
+            end
+          end
+        end
       end
 
       context 'number of records mod 10 is 0' do

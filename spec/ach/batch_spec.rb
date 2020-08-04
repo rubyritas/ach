@@ -113,6 +113,11 @@ describe ACH::Batch do
       expect(@credit.individual_name_to_ach).to eq("Employee Name That Is ")
     end
 
+    it 'should remove new line characters' do
+      @credit.individual_name = "Multiline\nName\r\n"
+      expect(@credit.individual_name_to_ach).to eq("MultilineName         ")
+    end
+
     it 'should strip non ascii characters' do
       @credit.individual_name = "Jacob Møller"
       expect(@credit.individual_name_to_ach).to eq("Jacob Mller           ")

@@ -14,13 +14,14 @@ module ACH
       @control = Records::FileControl.new
 
       if data
-        if (data.encode(Encoding.find('ASCII'),ENCODING_OPTIONS) =~ /\n|\r\n/).nil?
+        if (data.encode(Encoding.find('ASCII'), **ENCODING_OPTIONS) =~ /\n|\r\n/).nil?
           parse_fixed(data)
         else
           parse(data)
         end
       end
     end
+
 
     # @param eol [String] Line ending, default to CRLF
     def to_s eol = "\r\n"
@@ -32,12 +33,15 @@ module ACH
         records += batch.to_ach
       end
       records << @control
-      nines_needed = 10 - (records.inject(0) { |sum, r| sum += r.lines_count } % 10)
+
+      records_count = records.map(&:records_count).reduce(:+)
+      nines_needed = (10 - records_count) % 10
       nines_needed = nines_needed % 10
       nines_needed.times { records << Records::Nines.new() }
 
+      records_count = records.map(&:records_count).reduce(:+)
       @control.batch_count = @batches.length
-      @control.block_count = (records.length / 10).ceil
+      @control.block_count = (records_count / 10).ceil
 
       @control.entry_count = 0
       @control.debit_total = 0
