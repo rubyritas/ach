@@ -2,21 +2,21 @@ require 'spec_helper'
 
 describe ACH::ACHFile do
 
-  subject :ach_file do
+  subject(:ach_file) do
     # Create ACH file
     ach = ACH::ACHFile.new
 
     # File Header
     fh = ach.header
-    fh.immediate_destination = '000000000'
+    fh.immediate_destination = '999999999'
     fh.immediate_destination_name = 'BANK NAME'
-    fh.immediate_origin = '000000000'
+    fh.immediate_origin = '666666666'
     fh.immediate_origin_name = 'BANK NAME'
 
     ach
   end
 
-  def add_batch ach, entry_details = 0
+  def add_batch(ach, entry_details = 0, balanced = false)
     batch = ACH::Batch.new
     bh = batch.header
     bh.company_name = 'Company Name'
@@ -26,19 +26,22 @@ describe ACH::ACHFile do
     bh.company_descriptive_date = Date.today
     bh.effective_entry_date =
       ACH::NextFederalReserveEffectiveDate.new(Date.today).result
-    bh.originating_dfi_identification = '00000000'
+    bh.originating_dfi_identification = '77777777'
 
     entry_details.times { add_detail(batch) }
+    if balanced
+      add_balancing_entry_detail(batch)
+    end
 
     ach.batches << batch
   end
 
-  def add_detail batch
+  def add_detail(batch)
     ed = ACH::EntryDetail.new
     ed.transaction_code = ACH::CHECKING_CREDIT
-    ed.routing_number = '000000000'
-    ed.account_number = '00000000000'
-    ed.amount = 100 # In cents
+    ed.routing_number = '111111111'
+    ed.account_number = '22222222222'
+    ed.amount = 101 # In cents
     ed.individual_id_number = 'Employee Name'
     ed.individual_name = 'Employee Name'
     ed.originating_dfi_identification = '00000000'
@@ -46,7 +49,54 @@ describe ACH::ACHFile do
     batch.entries << ed
   end
 
+  def add_balancing_entry_detail(batch)
+    balanced = ACH::BalancingEntryDetail.new.tap do |entry|
+      entry.transaction_code = ACH::CHECKING_DEBIT
+      entry.routing_number = '111111111'
+      entry.account_number = '22222222222'
+      entry.amount = batch.entries.inject(0){|sum, entry| sum + entry.amount}
+      entry.account_description = 'OFFSET'
+      entry.origin_routing_number = '33333333'
+      entry.trace_number = 1
+    end
+    batch.entries << balanced
+  end
+
   describe '#to_s' do
+    context 'with a balancing entry' do
+      before(:each) do
+        add_batch(ach_file, 4, true)
+        ach_file.to_s
+      end
+
+      let(:full_file) do
+        [
+          '101 999999999 6666666662011031627A094101BANK NAME              BANK NAME                      ',
+          '5200COMPANY NAME                        1123456789PPDDESCRIPTIO201103201104   1777777770000001',
+          '62211111111122222222222      0000000101EMPLOYEE NAME  EMPLOYEE NAME           0000000000000001',
+          '62211111111122222222222      0000000101EMPLOYEE NAME  EMPLOYEE NAME           0000000000000001',
+          '62211111111122222222222      0000000101EMPLOYEE NAME  EMPLOYEE NAME           0000000000000001',
+          '62211111111122222222222      0000000101EMPLOYEE NAME  EMPLOYEE NAME           0000000000000001',
+          '62711111111122222222222      0000000404               OFFSET                  0333333330000001',
+          '820000000500555555550000000004040000000004041123456789                         777777770000001',
+          '9000001000001000000050055555555000000000404000000000404                                       ',
+          '9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999'
+        ]
+      end
+
+      it 'sets the credits and debits to the same amount' do
+        expect(ach_file.control.debit_total).to eq(404)
+        expect(ach_file.control.credit_total).to eq(404)
+      end
+
+      it 'shows the offset line' do
+        expect(ach_file.to_s.split("\r\n")[6]).to eq(full_file[6])
+      end
+      it 'shows te debit and credit on line 7' do
+        expect(ach_file.to_s.split("\r\n")[7]).to eq(full_file[7])
+      end
+    end
+
     describe 'incrementing batch numbers' do
       before(:each) do
         add_batch ach_file, 1
