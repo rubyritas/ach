@@ -51,8 +51,18 @@ module ACH
       @control.company_identification = @header.company_identification
       @control.originating_dfi_identification = @header.originating_dfi_identification
       @control.batch_number = @header.batch_number
+      if last_entry.is_a? ACH::BalancingEntryDetail
+        @control.credit_total = last_entry.amount
+        @control.debit_total = last_entry.amount
+      end
 
       [@header] + @entries + @addendas + [@control]
+    end
+    
+    private
+    
+    def last_entry
+      @last_entry ||= @entries.last
     end
   end
 end
