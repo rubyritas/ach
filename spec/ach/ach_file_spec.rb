@@ -92,7 +92,7 @@ describe ACH::ACHFile do
       it 'shows the offset line' do
         expect(ach_file.to_s.split("\r\n")[6]).to eq(full_file[6])
       end
-      it 'shows te debit and credit on line 7' do
+      it 'shows the debit and credit on line 7' do
         expect(ach_file.to_s.split("\r\n")[7]).to eq(full_file[7])
       end
     end
