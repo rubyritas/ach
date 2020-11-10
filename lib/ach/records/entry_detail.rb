@@ -85,4 +85,14 @@ module ACH::Records
         nil, nil, /\A\d{8}\z/
     field :trace_number, Integer, lambda { |f| sprintf('%07d', f)}
   end
+
+  class BalancingEntryDetail < EntryDetail
+    @fields = EntryDetail.fields.slice(0, 5)
+    const_field :individual_id_number, (' ' * 15)
+    field :account_description, String, lambda { |f| left_justify(f, 22)}
+    field :discretionary_data, String, lambda { |f| left_justify(f, 2)}, '  '
+    field :addenda_record_indicator, Integer, lambda { |f| sprintf('%01d', f)}, 0
+    field :origin_routing_number, String, lambda { |f| sprintf('%08d', f.to_i) }
+    field :trace_number, Integer, lambda { |f| sprintf('%07d', f)}
+  end 
 end
