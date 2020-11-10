@@ -1,3 +1,8 @@
+### 0.5.16
+
+- Add Balancing Entry Detail rows in order to construct a Balanced ACH file
+  (@samgranieri)
+
 ### 0.5.4
 
 - Increment batch numbers if not manually set.
