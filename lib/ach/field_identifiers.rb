@@ -53,7 +53,7 @@ module ACH
           if RUBY_VERSION < '1.9'
             val = Iconv.conv('ASCII//IGNORE', 'UTF8', val)
           else
-            val = val.encode Encoding.find('ASCII'), ENCODING_OPTIONS
+            val = val.encode Encoding.find('ASCII'), **ENCODING_OPTIONS
           end
         end
 
