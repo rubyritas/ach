@@ -54,7 +54,7 @@ module ACH::Records
       return !self.addenda.empty?
     end
 
-    def to_ach
+    def to_ach eol: ACH.eol
       self.addenda_record_indicator = (self.addenda.empty? ? 0 : 1) if self.respond_to?(:addenda_record_indicator)
       self.number_of_addenda_records = self.addenda.length if self.respond_to?(:number_of_addenda_records)
 
@@ -62,7 +62,7 @@ module ACH::Records
 
       self.addenda.each {|a|
         a.entry_detail_sequence_number = self.trace_number
-        ach_string << "\r\n" + a.to_ach
+        ach_string << eol + a.to_ach
       }
       return ach_string
     end

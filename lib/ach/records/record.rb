@@ -13,7 +13,7 @@ module ACH
 
       attr_accessor :case_sensitive
 
-      def to_ach
+      def to_ach eol: nil
         to_ach = self.class.fields.collect { |f| send("#{f}_to_ach") }.join('')
         case_sensitive ? to_ach : to_ach.upcase
       end

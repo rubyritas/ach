@@ -92,6 +92,7 @@ describe ACH::ACHFile do
       it 'shows the offset line' do
         expect(ach_file.to_s.split("\r\n")[6]).to eq(full_file[6])
       end
+
       it 'shows the debit and credit on line 7' do
         expect(ach_file.to_s.split("\r\n")[7]).to eq(full_file[7])
       end
@@ -198,6 +199,10 @@ describe ACH::ACHFile do
     end
 
     describe 'eol param' do
+      before(:each) do
+        add_batch ach_file, 3
+      end
+
       context 'default' do
         subject(:output) { ach_file.to_s }
 
@@ -214,6 +219,17 @@ describe ACH::ACHFile do
           expect(output.split("\n").length).to eq(10)
           expect(output[-2..-1]).to_not eq("\r\n")
           expect(output[-1]).to eq("\n")
+        end
+
+        context 'has addendum records' do
+          it 'accounts for addendum records' do
+            addendum = ACH::Addendum.new
+            addendum.sequence_number = 1
+            addendum.payment_data = 'Data'
+
+            ach_file.batches.first.entries.last.addenda << addendum
+            expect(ach_file.to_s("\n").include?("\r")).to be(false)
+          end
         end
       end
     end

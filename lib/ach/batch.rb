@@ -58,9 +58,9 @@ module ACH
 
       [@header] + @entries + @addendas + [@control]
     end
-    
+
     private
-    
+
     def last_entry
       @last_entry ||= @entries.last
     end
