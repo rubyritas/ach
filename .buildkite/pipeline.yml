@@ -1,0 +1,33 @@
+steps:
+  - label: ":gem: test with Ruby 2.6"
+    command: '.buildkite/test'
+    plugins:
+      docker#v3.3.0:
+        image: "docker.artifactory.internal.amount.com/ruby:2.6"
+
+  - label: ":gem: test with Ruby 2.7"
+    command: '.buildkite/test'
+    plugins:
+      docker#v3.3.0:
+        image: "docker.artifactory.internal.amount.com/ruby:2.7"
+
+  - label: ":gem: test with Ruby 3.0"
+    command: '.buildkite/test'
+    plugins:
+      docker#v3.3.0:
+        image: "docker.artifactory.internal.amount.com/ruby:3.0"
+
+  - wait
+
+  # If on the master branch, package the gem and store it in artifactory after all tests complete succesfully
+  - label: ":gem: :package:"
+    if: "build.branch == 'master'"
+    env:
+      # This value should never change for builds to artifactory
+      BUILDKITE_ARTIFACT_UPLOAD_DESTINATION: "rt://gems-local/gems"
+      BUILDKITE_ARTIFACTORY_URL: "https://artifactory.internal.amount.com/artifactory"
+    command: "gem build ach.gemspec"
+    artifact_paths: "ach-*.gem"
+    plugins:
+      - docker#v3.3.0:
+          image: "docker.artifactory.internal.amount.com/ruby:2.7"

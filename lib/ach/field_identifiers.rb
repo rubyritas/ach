@@ -48,11 +48,7 @@ module ACH
         end
 
         if val.kind_of?(String)
-          if RUBY_VERSION < '1.9'
-            val = Iconv.conv('ASCII//IGNORE', 'UTF8', val)
-          else
-            val = val.encode Encoding.find('ASCII'), ENCODING_OPTIONS
-          end
+          val = val.encode(Encoding.find('ASCII'), **ENCODING_OPTIONS)
         end
 
         if stringify
