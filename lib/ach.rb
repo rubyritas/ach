@@ -20,6 +20,12 @@ module ACH
     225, # ACH Debits Only
     280  # ACH Automated Accounting Advices
   ]
+
+  DEFAULT_EOL = "\r\n"
+
+  def self.eol
+    DEFAULT_EOL
+  end
 end
 
 require 'time'

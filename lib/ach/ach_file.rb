@@ -24,7 +24,7 @@ module ACH
 
 
     # @param eol [String] Line ending, default to CRLF
-    def to_s eol = "\r\n"
+    def to_s eol = ACH.eol
       records = []
       records << @header
 
@@ -55,10 +55,10 @@ module ACH
         @control.entry_hash += batch.control.entry_hash
       end
 
-      records.collect { |r| r.to_ach }.join(eol) + eol
+      records.collect { |r| r.to_ach(eol: eol) }.join(eol) + eol
     end
 
-    def report
+    def report eol: ACH.eol
       to_s # To ensure correct records
       lines = []
 
@@ -74,7 +74,7 @@ module ACH
       lines << left_justify("Credit Total: ", 25) +
           sprintf("% 7d.%02d", @control.credit_total / 100, @control.credit_total % 100)
 
-      lines.join("\r\n")
+      lines.join(eol)
     end
 
     def parse_fixed data
@@ -148,7 +148,8 @@ module ACH
         when '8'
           # skip
         when '9'
-          # skip
+          @control = Records::FileControl.new
+          @control.filler = line[55..93]
         else
           raise UnrecognizedTypeCode, "Didn't recognize type code #{type} for this line:\n#{line}"
         end
