@@ -1,5 +1,7 @@
 # ACH
 
+Note: I'm no longer actively maintaining this gem, and would be happy to turn it over to someone else. Let me know if you'd like to take over.
+
 [![Build Status](https://travis-ci.org/jm81/ach.svg?branch=master)](https://travis-ci.org/jm81/ach)
 
 ach is a Ruby helper for builder ACH files. In particular, it helps with field
