@@ -17,7 +17,7 @@ module ACH
       @control = Records::FileControlConfirmation.new
 
       if data
-        if (data.encode(Encoding.find("ASCII"),ENCODING_OPTIONS) =~ /\n|\r\n/).nil?
+        if (data.encode(Encoding.find("ASCII"), **ENCODING_OPTIONS) =~ /\n|\r\n/).nil?
           parse_fixed(data)
         else
           parse(data)
@@ -37,7 +37,7 @@ module ACH
     def parse_fixed data
       # replace with a space to preserve the record-lengths
       encoded_data = data.encode(Encoding.find("ASCII"),
-                                 { :invalid => :replace, :undef => :replace, :replace => " " })
+                                 :invalid => :replace, :undef => :replace, :replace => " " )
       parse encoded_data.scan(/.{94}/).join("\n")
     end
 
