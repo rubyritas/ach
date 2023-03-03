@@ -38,7 +38,29 @@ describe "Parse" do
       expect(bh.full_company_identification).to eq("1412345678")
       expect(bh.standard_entry_class_code).to eq('COR')
       expect(bh.company_entry_description).to eq("DESCRIPT")
-      expect(bh.company_descriptive_date).to eq(Date.parse('121015'))
+      expect(bh.company_descriptive_date).to eq('SD1700')
+      expect(bh.effective_entry_date).to eq(Date.parse('121015'))
+      expect(bh.originating_dfi_identification).to eq("99222222")
+
+      second_batch = ach.batches[1]
+      bh = second_batch.header
+      expect(bh.company_name).to eq("COMPANY INC")
+      expect(bh.company_identification).to eq("412345678")
+      expect(bh.full_company_identification).to eq("1412345678")
+      expect(bh.standard_entry_class_code).to eq('PPD')
+      expect(bh.company_entry_description).to eq("DESCRIPT")
+      expect(bh.company_descriptive_date).to eq('121015')
+      expect(bh.effective_entry_date).to eq(Date.parse('121015'))
+      expect(bh.originating_dfi_identification).to eq("99222222")
+
+      third_batch = ach.batches[2]
+      bh = third_batch.header
+      expect(bh.company_name).to eq("COMPANY INC")
+      expect(bh.company_identification).to eq("412345678")
+      expect(bh.full_company_identification).to eq("1412345678")
+      expect(bh.standard_entry_class_code).to eq('PPD')
+      expect(bh.company_entry_description).to eq("DESCRIPT")
+      expect(bh.company_descriptive_date).to eq('nodate')
       expect(bh.effective_entry_date).to eq(Date.parse('121015'))
       expect(bh.originating_dfi_identification).to eq("99222222")
 
