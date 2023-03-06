@@ -158,9 +158,19 @@ module ACH
     end
 
     def parse_descriptive_date(date_string)
-      return if date_string.strip.empty?
+      date_string.strip!
 
-      Data.parse(date_string.strip)
+      return if date_string.empty?
+
+      date_time = date_string.match(/^SD(\d{2})(\d{2})$/) do
+        same_day_hour, same_day_minute = _1.captures.map(&:to_f)
+
+        Date.today.to_datetime + same_day_hour/24 + same_day_minute/60
+      end
+
+      return date_time unless date_time.nil?
+
+      Data.parse(date_string)
     rescue
       date_string
     end

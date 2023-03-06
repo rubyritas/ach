@@ -45,7 +45,7 @@ bh.company_name = 'Company Name'
 bh.company_identification = '123456789' # Use 10 characters if you're not using an EIN
 bh.standard_entry_class_code = 'PPD'
 bh.company_entry_description = 'DESCRIPTION'
-bh.company_descriptive_date = Date.today
+bh.company_descriptive_date = Date.today # Or string with 'SDHHMM' for same day ACH
 bh.effective_entry_date = ACH::NextFederalReserveEffectiveDate.new(Date.today).result
 bh.originating_dfi_identification = '00000000'
 ach.batches << batch
