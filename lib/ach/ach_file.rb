@@ -114,7 +114,7 @@ module ACH
           bh.full_company_identification    = line[40..49]
           bh.standard_entry_class_code      = line[50..52].strip
           bh.company_entry_description      = line[53..62].strip
-          bh.company_descriptive_date       = Date.parse(line[63..68]) rescue nil # this can be various formats
+          bh.company_descriptive_date       = parse_descriptive_date(line[63..68].strip)
           bh.effective_entry_date           = Date.parse(line[69..74])
           bh.originating_dfi_identification = line[79..86].strip
         when '6'
@@ -155,6 +155,20 @@ module ACH
 
       self.batches << batch unless batch.nil?
       to_s
+    end
+
+    def parse_descriptive_date(date_string)
+      return if date_string.empty?
+
+      date_time = date_string.match(/^SD(\d{2})(\d{2})$/) do
+        same_day_hour, same_day_minute = _1.captures.map(&:to_f)
+
+        Date.today.to_datetime + (same_day_hour + same_day_minute/60) / 24
+      end
+
+      date_time || Data.parse(date_string)
+    rescue
+      date_string
     end
   end
 end

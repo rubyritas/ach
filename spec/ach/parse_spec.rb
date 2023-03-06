@@ -20,6 +20,10 @@ describe "Parse" do
     end
 
     it "should parse return/notification of change file" do
+      fake_current_datetime = Date.new(2012, 10, 15)
+      expected_datetime = DateTime.new(2012, 10, 15, 19, 32)
+      allow(Date).to receive(:today).and_return(fake_current_datetime)
+
       ach = ACH::ACHFile.new(@data)
       fh = ach.header
       expect(fh.immediate_destination).to eq("191001234")
@@ -38,7 +42,29 @@ describe "Parse" do
       expect(bh.full_company_identification).to eq("1412345678")
       expect(bh.standard_entry_class_code).to eq('COR')
       expect(bh.company_entry_description).to eq("DESCRIPT")
-      expect(bh.company_descriptive_date).to eq(Date.parse('121015'))
+      expect(bh.company_descriptive_date).to eq(expected_datetime)
+      expect(bh.effective_entry_date).to eq(Date.parse('121015'))
+      expect(bh.originating_dfi_identification).to eq("99222222")
+
+      second_batch = ach.batches[1]
+      bh = second_batch.header
+      expect(bh.company_name).to eq("COMPANY INC")
+      expect(bh.company_identification).to eq("412345678")
+      expect(bh.full_company_identification).to eq("1412345678")
+      expect(bh.standard_entry_class_code).to eq('PPD')
+      expect(bh.company_entry_description).to eq("DESCRIPT")
+      expect(bh.company_descriptive_date).to eq('121015')
+      expect(bh.effective_entry_date).to eq(Date.parse('121015'))
+      expect(bh.originating_dfi_identification).to eq("99222222")
+
+      third_batch = ach.batches[2]
+      bh = third_batch.header
+      expect(bh.company_name).to eq("COMPANY INC")
+      expect(bh.company_identification).to eq("412345678")
+      expect(bh.full_company_identification).to eq("1412345678")
+      expect(bh.standard_entry_class_code).to eq('PPD')
+      expect(bh.company_entry_description).to eq("DESCRIPT")
+      expect(bh.company_descriptive_date).to eq('nodate')
       expect(bh.effective_entry_date).to eq(Date.parse('121015'))
       expect(bh.originating_dfi_identification).to eq("99222222")
 
