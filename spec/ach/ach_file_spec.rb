@@ -12,6 +12,7 @@ describe ACH::ACHFile do
     fh.immediate_destination_name = 'BANK NAME'
     fh.immediate_origin = '666666666'
     fh.immediate_origin_name = 'BANK NAME'
+    fh.transmission_datetime = Time.new(2020, 11, 3, 16, 27)
 
     ach
   end
@@ -23,9 +24,10 @@ describe ACH::ACHFile do
     bh.company_identification = '123456789'
     bh.standard_entry_class_code = 'PPD'
     bh.company_entry_description = 'DESCRIPTION'
-    bh.company_descriptive_date = Date.today
+    bh.company_descriptive_date = Date.new(2020, 11, 3)
+
     bh.effective_entry_date =
-      ACH::NextFederalReserveEffectiveDate.new(Date.today).result
+      ACH::NextFederalReserveEffectiveDate.new(Date.new(2020, 11, 3)).result
     bh.originating_dfi_identification = '77777777'
 
     entry_details.times { add_detail(batch) }
@@ -82,6 +84,13 @@ describe ACH::ACHFile do
           '9000001000001000000050055555555000000000404000000000404                                       ',
           '9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999'
         ]
+      end
+
+      it 'sets the header and batch' do
+        lines = ach_file.to_s.split(ACH.eol)
+
+        expect(lines[0]).to eq(full_file[0])
+        expect(lines[1]).to eq(full_file[1])
       end
 
       it 'sets the credits and debits to the same amount' do

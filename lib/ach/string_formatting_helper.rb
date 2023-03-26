@@ -4,7 +4,7 @@ module ACH
     def self.stringify_with_same_day(f)
       return f.upcase if f.to_s.upcase.match(/^SD\d+$/)
 
-      Date.strptime(f, '%y%m%d')
+      f.strftime('%y%m%d')
     rescue
       f
     end
