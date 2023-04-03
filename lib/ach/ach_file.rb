@@ -28,10 +28,6 @@ module ACH
       @batches.each { |b| records += b.to_ach }
       records << @control
 
-      nines_needed = 10 - (records.length % 10)
-      nines_needed = nines_needed % 10
-      nines_needed.times { records << Records::Nines.new() }
-
       @control.batch_count = @batches.length
       @control.block_count = (records.length / 10).ceil
 
@@ -46,6 +42,10 @@ module ACH
         @control.credit_total += batch.control.credit_total
         @control.entry_hash += batch.control.entry_hash
       end
+
+      nines_needed = 10 - (@control.entry_count % 10)
+      nines_needed = nines_needed % 10
+      nines_needed.times { records << Records::Nines.new() }
 
       records.collect { |r| r.to_ach }.join("\r\n") + "\r\n"
     end

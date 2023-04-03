@@ -55,7 +55,7 @@ module ACH
       @entries.each do |entry|
         entries_or_addendas << entry
         addenda = @addendas.find { |a| a.entry_detail_sequence_number == entry.trace_number }
-        entries_or_addendas << addenda if addenda
+        entry.addenda << addenda if addenda
       end
 
       [@header] + entries_or_addendas + [@control]
