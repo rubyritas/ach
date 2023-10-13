@@ -79,7 +79,7 @@ module ACH
 
     def parse_fixed data
       # replace with a space to preserve the record-lengths
-      encoded_data = data.encode(Encoding.find('ASCII'),{:invalid => :replace, :undef => :replace, :replace => ' '})
+      encoded_data = data.encode(Encoding.find('ASCII'), **{:invalid => :replace, :undef => :replace, :replace => ' '})
       parse encoded_data.scan(/.{94}/).join("\n")
     end
 
