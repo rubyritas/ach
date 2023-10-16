@@ -21,6 +21,7 @@ describe "Parse" do
 
     it "should parse return/notification of change file" do
       fake_current_datetime = Date.new(2012, 10, 15)
+      expected_datetime = DateTime.new(2012, 10, 15, 19, 32)
       allow(Date).to receive(:today).and_return(fake_current_datetime)
 
       ach = ACH::ACHFile.new(@data)
@@ -41,7 +42,7 @@ describe "Parse" do
       expect(bh.full_company_identification).to eq("1412345678")
       expect(bh.standard_entry_class_code).to eq('COR')
       expect(bh.company_entry_description).to eq("DESCRIPT")
-      expect(bh.company_descriptive_date).to eq('SD1932')
+      expect(bh.company_descriptive_date).to eq(expected_datetime)
       expect(bh.effective_entry_date).to eq(Date.parse('121015'))
       expect(bh.originating_dfi_identification).to eq("99222222")
 
