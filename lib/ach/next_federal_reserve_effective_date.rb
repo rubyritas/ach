@@ -6,7 +6,7 @@ module ACH
       if Gem.loaded_specs['holidays'].version < Gem::Version.new('7.0.0')
         :federal_reserve
       else
-        :federalreserve
+        :federalreservebanks
       end
     def initialize(submission_date)
       @submission_date = submission_date
