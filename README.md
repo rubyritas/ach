@@ -1,18 +1,9 @@
 # ACH
 
-Note: I'm no longer actively maintaining this gem, and would be happy to turn it over to someone else. Let me know if you'd like to take over.
+ACH is a Ruby helper for building and parsing ACH files.
 
-[![Build Status](https://travis-ci.org/jm81/ach.svg?branch=master)](https://travis-ci.org/jm81/ach)
-
-ach is a Ruby helper for builder ACH files. In particular, it helps with field
+In particular, it helps with field
 order and alignment, and adds padding lines to end of file.
-
-**This library has only been used in two production applications and for very
-limited purposes. Please test thoroughly before using in a production
-environment.**
-
-See [ACH::Builder](http://search.cpan.org/~tkeefer/ACH-Builder-0.03/lib/ACH/Builder.pm)
-for a similar Perl library
 
 ## Example
 
