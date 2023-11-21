@@ -36,6 +36,14 @@ describe ACH::NextFederalReserveEffectiveDate do
       end
     end
 
+    context 'when today is Thursday and tomorrow is a observed holiday' do
+      let(:run_date) { Date.new(2023, 11, 9) }
+
+      it 'returns tomorrow' do
+        expect(subject).to eq(Date.new(2023, 11, 10))
+      end
+    end
+
     context 'when today is Monday and a holiday' do
       let(:run_date) { Date.new(2012, 5, 28) }
 
