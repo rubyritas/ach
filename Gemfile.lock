@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ach (0.6.4)
+    ach (0.6.5)
       holidays (>= 3.1)
 
 GEM
@@ -14,7 +14,7 @@ GEM
     autotest (5.0.0)
       minitest-autotest (~> 1.0)
     diff-lcs (1.5.0)
-    holidays (8.6.0)
+    holidays (8.7.1)
     minitest (5.20.0)
     minitest-autotest (1.1.1)
       minitest-server (~> 1.0)
