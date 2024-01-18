@@ -166,7 +166,7 @@ module ACH
         Date.today.to_datetime + (same_day_hour + same_day_minute/60) / 24
       end
 
-      date_time || ACH::Data.parse(date_string)
+      date_time || Date.parse(date_string)
     rescue
       date_string
     end
