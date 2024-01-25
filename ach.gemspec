@@ -17,6 +17,8 @@ Gem::Specification.new do |s|
   s.test_files   = Dir.glob('examples/**/*')
   s.require_path = 'lib'
 
+  s.required_ruby_version = ">= 2.0.0"
+
   s.add_development_dependency('appraisal')
   s.add_development_dependency('autotest')
   s.add_development_dependency('rake', '>= 12.3.3')
