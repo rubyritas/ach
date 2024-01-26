@@ -1,17 +1,26 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require 'ach/version'
+require "ach/version"
 
 Gem::Specification.new do |s|
-  s.name        = 'ach'
+  s.name        = "ach"
   s.version     = ACH::VERSION.dup
-  s.summary     = 'Helper for building ACH files'
-  s.description = 'ach is a Ruby helper for building and parsing ACH files. In particular, it helps with field order and alignment, and adds padding lines to end of file.'
-  s.email       = 'jmorgan@morgancreative.net'
-  s.homepage    = 'https://github.com/henriquegasques/ach'
-  s.authors     = ['Jared Morgan', 'Josh Puetz']
+  s.summary     = "Helper for building ACH files"
+  s.description = "ach is a Ruby helper for building and parsing ACH files. In particular, it helps with field order and alignment, and adds padding lines to end of file."
+  s.email       = "jmorgan@morgancreative.net"
+  s.homepage    = "https://github.com/henriquegasques/ach"
+  s.authors     = ["Jared Morgan", "Josh Puetz"]
+  s.license     = "MIT"
 
-  s.extra_rdoc_files = ['README.md']
+  s.metadata = {
+    "bug_tracker_uri" => "https://github.com/henriquegasques/ach/issues",
+    "changelog_uri" => "https://github.com/henriquegasques/ach/blob/main/CHANGELOG.md",
+    "documentation_uri" => "https://github.com/henriquegasques/ach/blob/main/README.md",
+    "homepage_uri" => "https://github.com/henriquegasques/ach",
+    "source_code_uri" => "https://github.com/henriquegasques/ach"
+  }
+
+  s.extra_rdoc_files = ["README.md"]
 
   s.files        = Dir.glob('lib/**/*') + %w{MIT-LICENSE README.md}
   s.test_files   = Dir.glob('examples/**/*')
