@@ -53,7 +53,7 @@ describe "Parse" do
       expect(bh.full_company_identification).to eq("1412345678")
       expect(bh.standard_entry_class_code).to eq('PPD')
       expect(bh.company_entry_description).to eq("DESCRIPT")
-      expect(bh.company_descriptive_date).to eq('121015')
+      expect(bh.company_descriptive_date).to eq(Date.parse('121015'))
       expect(bh.effective_entry_date).to eq(Date.parse('121015'))
       expect(bh.originating_dfi_identification).to eq("99222222")
 
