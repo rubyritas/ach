@@ -13,11 +13,11 @@ Gem::Specification.new do |s|
   s.license     = "MIT"
 
   s.metadata = {
-    "bug_tracker_uri" => "https://github.com/henriquegasques/ach/issues",
-    "changelog_uri" => "https://github.com/henriquegasques/ach/blob/main/CHANGELOG.md",
-    "documentation_uri" => "https://github.com/henriquegasques/ach/blob/main/README.md",
-    "homepage_uri" => "https://github.com/henriquegasques/ach",
-    "source_code_uri" => "https://github.com/henriquegasques/ach"
+    "bug_tracker_uri" => "https://github.com/rubyritas/ach/issues",
+    "changelog_uri" => "https://github.com/rubyritas/ach/blob/main/CHANGELOG.md",
+    "documentation_uri" => "https://github.com/rubyritas/ach/blob/main/README.md",
+    "homepage_uri" => "https://github.com/rubyritas/ach",
+    "source_code_uri" => "https://github.com/rubyritas/ach"
   }
 
   s.extra_rdoc_files = ["README.md"]
