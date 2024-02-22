@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = ACH::VERSION.dup
   s.summary     = "Helper for building ACH files"
   s.description = "ach is a Ruby helper for building and parsing ACH files. In particular, it helps with field order and alignment, and adds padding lines to end of file."
-  s.email       = "jmorgan@morgancreative.net"
+  s.email       = "henriquegasques@gmail.com"
   s.homepage    = "https://github.com/henriquegasques/ach"
   s.authors     = ["Jared Morgan", "Josh Puetz"]
   s.license     = "MIT"
