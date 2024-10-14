@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ach
+  description:
+  links:
+  annotations:
+spec:
+  type: service
+  lifecycle: production
+  owner:
+  system:
