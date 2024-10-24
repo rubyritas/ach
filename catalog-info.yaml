@@ -18,7 +18,7 @@ metadata:
   annotations:
     github.com/project-slug: justworkshr/ach
   tags:
-    - ruby-helper
+    - ach
 spec:
   lifecycle: production
   type: other
