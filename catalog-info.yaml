@@ -1,12 +1,26 @@
 apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: ach
+  description: ACH is a Ruby helper for building and parsing ACH files
+  annotations:
+    github.com/project-slug: justworkshr/ach
+spec:
+  lifecycle: production
+  type: other
+  owner: developers
+---
+apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: ach
-  description:
-  links:
+  description: ACH is a Ruby helper for building and parsing ACH files
   annotations:
+    github.com/project-slug: justworkshr/ach
+  tags:
+    - ruby-helper
 spec:
-  type: service
   lifecycle: production
-  owner:
-  system:
+  type: other
+  system: ach
+  owner: developers
