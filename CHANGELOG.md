@@ -1,3 +1,8 @@
+### v0.6.0
+
+- Addendum records respect eol param h/t (@sumahiremath)
+- Response code parsing using custom 'filler' field in file control (@sumahiremath)
+
 ### 0.5.16
 
 - Add Balancing Entry Detail rows in order to construct a Balanced ACH file
