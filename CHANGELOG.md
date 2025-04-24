@@ -1,3 +1,8 @@
+### v0.6.3
+
+- ACH::StringFormattingHelper - add some specs for more context if the current code needs further work
+- Fix ruby keyword argument deprecation
+
 ### v0.6.2
 
 - Add README comment about File Creation Date timezones in file header by @zcotter in #63
