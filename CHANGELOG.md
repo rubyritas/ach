@@ -1,3 +1,9 @@
+### v0.6.2
+
+- Add README comment about File Creation Date timezones in file header by @zcotter in #63
+- Fix reading files with SD1700 in company descriptive date field by @henriquegasques in #66
+- Fix formatting of the #company_descriptive_date filed by @chubchenko in #67
+
 ### v0.6.0
 
 - Addendum records respect eol param h/t (@sumahiremath)
