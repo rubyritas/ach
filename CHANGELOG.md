@@ -1,3 +1,7 @@
+### v0.6.5
+
+- Fix bug in parse_descriptive_date method in ach_file.rb by @jkaufman638 in #74
+
 ### v0.6.4
 
 - Fix keyword argument 2.7 by @lorman in #71
