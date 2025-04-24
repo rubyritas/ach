@@ -1,3 +1,8 @@
+### v0.6.4
+
+- Fix keyword argument 2.7 by @lorman in #71
+- fix: use federalreservebanks holiday definition for ACH files by @kapil2004 in #73
+
 ### v0.6.3
 
 - ACH::StringFormattingHelper - add some specs for more context if the current code needs further work
