@@ -1,3 +1,28 @@
+### v0.6.5
+
+- Fix bug in parse_descriptive_date method in ach_file.rb by @jkaufman638 in #74
+
+### v0.6.4
+
+- Fix keyword argument 2.7 by @lorman in #71
+- fix: use federalreservebanks holiday definition for ACH files by @kapil2004 in #73
+
+### v0.6.3
+
+- ACH::StringFormattingHelper - add some specs for more context if the current code needs further work
+- Fix ruby keyword argument deprecation
+
+### v0.6.2
+
+- Add README comment about File Creation Date timezones in file header by @zcotter in #63
+- Fix reading files with SD1700 in company descriptive date field by @henriquegasques in #66
+- Fix formatting of the #company_descriptive_date filed by @chubchenko in #67
+
+### v0.6.0
+
+- Addendum records respect eol param h/t (@sumahiremath)
+- Response code parsing using custom 'filler' field in file control (@sumahiremath)
+
 ### 0.5.16
 
 - Add Balancing Entry Detail rows in order to construct a Balanced ACH file
